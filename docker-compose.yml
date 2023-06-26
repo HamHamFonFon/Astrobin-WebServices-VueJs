@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  js-astrobin-ws:
+    container_name: js-astrobin-ws
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      - TERM=xterm-color
+    volumes:
+      - .:/home/node/app
+    ports:
+      - "8080:8080"
