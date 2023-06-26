@@ -22,7 +22,24 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
                 ...customParams
             }
         );
-        return await axios.get(astrobinUrl, config);
+        const response = await axios.get(astrobinUrl, config);
+
+        return Object.entries(response).map(image => {
+            return {
+                id: image.data.id,
+                astrobin_id: image.data.hash,
+                title: image.data.title,
+                subjects: image.data.subjects,
+                uploaded: image.data.uploaded,
+                urlGallery: image.data.url_gallery,
+                urlThumb: image.data.url_thumb,
+                urlRegular: image.data.url_regular,
+                urlHd: image.data.url_hd,
+                user: image.data.user,
+                urlHistogram: image.data.url_histogram,
+                urlSkyplot: image.data.url_skyplot
+            }
+        })
     } catch (err) {
         throw new Error('Request error: ' + err.message);
     }
