@@ -5,8 +5,8 @@ const HEADERS = {
     'Content-Type': 'application/json'
 };
 const ASTROBIN_QUERY_PARAMS = {
-    api_key: process.env.ASTROBIN_API_KEY,
-    api_secret: process.env.ASTROBIN_API_SECRET,
+    api_key: process.env.VUE_APP_ASTROBIN_API_KEY,
+    api_secret: process.env.VUE_APP_ASTROBIN_API_SECRET,
     format: 'json'
 };
 

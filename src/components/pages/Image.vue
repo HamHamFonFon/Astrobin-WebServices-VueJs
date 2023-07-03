@@ -1,17 +1,20 @@
 <template>
   <h2>Image component</h2>
 
-  <AstrobinImage id="{{imageId}}"></AstrobinImage>
+  <ErrorMessage />
+  <AstrobinImage astrobinId="{{imageId}}"></AstrobinImage>
 
 </template>
 
 <script>
 import AstrobinImage from "@/components/astrobin/AstrobinImage.vue"
+import ErrorMessage from "@/components/layout/Error.vue";
 
 export default {
   name: "PageImage",
   components: {
-    AstrobinImage
+    AstrobinImage,
+    ErrorMessage
   },
   data () {
     return {
