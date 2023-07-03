@@ -7,12 +7,16 @@ const routes = [
     {
         path: '/',
         name: 'PageToday',
-        component: PageToday
+        label: 'Image du jour',
+        component: PageToday,
+        icon: 'mdi-star'
     },
     {
         path: '/image',
         name: 'Image',
-        component: PageImage
+        label: 'Image',
+        component: PageImage,
+        icon: 'mdi-star'
     }
 ];
 

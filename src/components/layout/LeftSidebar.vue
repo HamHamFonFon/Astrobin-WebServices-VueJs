@@ -7,12 +7,29 @@
         @click="rail = false"
     >
       <v-list-item
-        title="Astrobin API"
-        nav
-      ></v-list-item>
-      <v-divider></v-divider>
-      <v-list density="compact" nav>
+          :prepend-avatar="imageLogo"
+          title="Astrobin API"
+          nav
+      >
+        <template v-slot:append>
+          <v-btn
+              variant="text"
+              icon="mdi-chevron-left"
+              @click.stop="rail = !rail"
+          ></v-btn>
+        </template>
+      </v-list-item>
 
+      <v-divider></v-divider>
+
+      <v-list density="compact" nav>
+          <v-list-item v-for="route in routerLinks" :key="route.path"
+            :prepend-icon="route.icon"
+            :title="route.label"
+            :value="route.name"
+            :to="route.path"
+          >
+          </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -20,13 +37,21 @@
 </template>
 
 <script>
+
+import imageLogo from '@/assets/images/astro_otter_200-200.png'
+
 export default {
   name: "LeftSidebar",
   data() {
     return {
+      imageLogo: imageLogo,
+      routerLinks: [],
       drawer: true,
       rail: true,
     }
+  },
+  mounted() {
+    this.routerLinks = this.$router.options.routes
   }
 }
 </script>
