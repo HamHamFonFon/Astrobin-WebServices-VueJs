@@ -17,4 +17,4 @@ COPY --from=builder --chown=node /home/node/app/public ./public
 COPY --from=builder --chown=node /home/node/app/package*.json .
 
 EXPOSE 3000
-CMD ["npm", "serve"]
+CMD npm run serve
