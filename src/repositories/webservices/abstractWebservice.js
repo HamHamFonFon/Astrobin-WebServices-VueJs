@@ -1,5 +1,3 @@
-import dotenv from 'dotenv'
-dotenv.config()
 
 const ASTROBIN_URI = 'https://www.astrobin.com';
 const HEADERS = {

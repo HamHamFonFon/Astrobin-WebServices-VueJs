@@ -1,16 +1,26 @@
 <template>
-  <Header></Header>
-  <!--  body-->
-  <router-view />
+  <v-card>
+    <v-layout>
+
+      <!-- Navbar -->
+      <LeftSidebar></LeftSidebar>
+
+      <!-- Body -->
+      <v-main>
+        <router-view />
+      </v-main>
+
+    </v-layout>
+  </v-card>
 </template>
 
 <script>
-import Header from '@/components/layout/Header.vue'
+import LeftSidebar  from '@/components/layout/LeftSidebar.vue'
 
 export default {
   name: 'App',
   components: {
-    Header
+    LeftSidebar
   }
 }
 </script>

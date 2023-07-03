@@ -1,10 +1,12 @@
 <template>
-
+  <div>
+    <h2>Collection</h2>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "Collection"
+    name: "AstrobinCollection"
 }
 </script>
 

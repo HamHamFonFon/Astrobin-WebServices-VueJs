@@ -1,7 +1,7 @@
 import { ENDPOINT } from './endpoint'
 import * as WS from "@/repositories/webservices/abstractWebservice.js";
 import axios from "axios";
-
+import ImageFilters from "@/repositories/enums/ImageFilters"
 const checkParameters = (params) => {
     return params.filter((value, key) => key === new ImageFilters(key));
 }

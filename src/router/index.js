@@ -1,21 +1,23 @@
-import {createRouter, createWebHistory} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 
-import Today from '@/components/pages/Today.vue'
-import Image from '@/components/pages/Image.vue'
+import PageToday from '@/components/pages/Today.vue'
+import PageImage from '@/components/pages/Image.vue'
 
 const routes = [
     {
         path: '/',
-        component: Today
+        name: 'PageToday',
+        component: PageToday
     },
     {
         path: '/image',
-        component: Image
+        name: 'Image',
+        component: PageImage
     }
 ];
 
-const router = new createRouter({
-    history: createWebHistory(),
+const router = createRouter({
+    history: createWebHistory(process.env.BASE_URL),
     routes
 })
 

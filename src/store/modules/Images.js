@@ -29,7 +29,7 @@ const actions = {
                     commit('setImages', listImages);
                 }
             })
-            .catch(err => {});
+            .catch(err => console.log(err.message));
     },
     async fetchImageById({ commit }, id) {
         try {

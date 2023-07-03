@@ -1,5 +1,5 @@
 import { ENDPOINT } from './endpoint'
-import * as WS from "@/repositories/abstractWebservice";
+import * as WS from "@/repositories/webservices/abstractWebservice.js";
 import axios from "axios";
 
 export const GET_TODAY_IMAGE = async () => {

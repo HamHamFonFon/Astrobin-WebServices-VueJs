@@ -1,4 +1,4 @@
-class ImageFilters
+export default class ImageFilters
 {
     static TitleIcontains = 'title__icontains';
     static DescriptionIcontains = 'description__icontains';

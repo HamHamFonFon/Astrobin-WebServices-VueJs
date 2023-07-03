@@ -1,6 +1,6 @@
 import { createStore, createLogger } from 'vuex';
-import images from '@/stores/modules/Images'
-import error from "@/stores/modules/Error";
+import images from '@/store/modules/Images'
+import error from "@/store/modules/Error";
 const debug = process.env.NODE_ENV !== 'production'
 
 export default createStore({
