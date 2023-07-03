@@ -1,8 +1,11 @@
 <template>
-  <h2>Image component</h2>
+  <v-container>
+    <h1>Image component</h1>
 
-  <ErrorMessage />
-  <AstrobinImage astrobinId="{{imageId}}"></AstrobinImage>
+    <ErrorMessage />
+    <AstrobinImage :astrobinId="astrobinId"></AstrobinImage>
+  </v-container>
+
 
 </template>
 
@@ -18,7 +21,7 @@ export default {
   },
   data () {
     return {
-      imageId: 'ybdrt3'
+      astrobinId: 'ybdrt3'
     }
   }
 }

@@ -1,9 +1,7 @@
 <template>
-  <div v-if="image">
     <h3>{{ image.title }}</h3>
     <img :src="image.urlGallery" :alt="image.title" />
     <figure>Image by "{{ image.user }}"</figure>
-  </div>
 </template>
 
 <script>
@@ -24,7 +22,7 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("images/fetchImageById", this.id);
+    this.$store.dispatch("images/fetchImageById", this.astrobinId);
   },
   computed: {
     ...mapGetters({'image' :'images/getImageById'}),

@@ -25,18 +25,19 @@ const actions = {
                             urlSkyplot: data.urlSkyplot
                         }
                     })
-
                     commit('setImages', listImages);
                 }
             })
             .catch(err => console.log(err.message));
     },
+
     async fetchImageById({ commit }, id) {
         try {
             const wsResponse = await ImagesWs.GET_IMAGE_BY_ID(id);
             commit("addImage", wsResponse);
         } catch (error) {
             commit('error/setError', error.message, { root: true })
+            commit('error/setHttpCode', error.code, { root: true })
         }
     },
     async updateImageByNewId({ commit}, newId ) {
@@ -45,6 +46,7 @@ const actions = {
             commit("updateImage", wsResponse);
         } catch (error) {
             commit('error/setError', error.message, { root: true })
+            commit('error/setHttpCode', error.code, { root: true })
         }
     }
 };

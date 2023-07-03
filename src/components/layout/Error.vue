@@ -1,8 +1,10 @@
 <template>
   <v-alert
+    v-if="200 !== this.httpCode"
     type="error"
+    icon="$error"
     density="compact"
-    title="Error"
+    :title="httpCode"
     :text="msgError"
   >
   </v-alert>
@@ -13,6 +15,7 @@ export default {
   name: 'ErrorMessage',
   data () {
     return {
+      httpCode: 'Error ' + this.$store.state.error['httpCode'],
       msgError: this.$store.state.error['error']
     }
   }

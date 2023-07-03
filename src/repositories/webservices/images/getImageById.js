@@ -9,7 +9,9 @@ export const GET_IMAGE_BY_ID = async (idImage) => {
         const response = await axios.get(astrobinUrl, config);
 
         if (200 !== response.status) {
-            throw new Error(response.statusText);
+            const error = new Error(response.statusText);
+            error.code = response.status;
+            throw error;
         }
 
         return {
@@ -27,6 +29,8 @@ export const GET_IMAGE_BY_ID = async (idImage) => {
             urlSkyplot: response.data.url_skyplot
         }
     } catch (err) {
-        throw new Error('Request error: ' + err.message);
+        const error = new Error(err.message);
+        error.code = 500;
+        throw error;
     }
 };
