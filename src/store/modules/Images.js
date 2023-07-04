@@ -1,7 +1,8 @@
 import { ImagesWs } from '@/repositories/webservices/images/index'
 
 const state = () => ({
-    images: []
+    images: [],
+    loaded: false
 })
 
 const actions = {
@@ -32,10 +33,13 @@ const actions = {
     },
 
     async fetchImageById({ commit }, id) {
+        commit('setLoaded', false);
         try {
             const wsResponse = await ImagesWs.GET_IMAGE_BY_ID(id);
             commit("addImage", wsResponse);
+            commit('setLoaded', true);
         } catch (error) {
+            commit('setLoaded', false);
             commit('error/setError', error.message, { root: true })
             commit('error/setHttpCode', error.code, { root: true })
         }
@@ -60,14 +64,18 @@ const mutations = {
     },
     setImages: (state, images) => {
         state.images = images;
+    },
+    setLoaded: (state, isLoaded) => {
+        state.loaded = isLoaded
     }
 };
 
 const getters = {
     getImageById: (state) => (id) => {
-        return state.images.find(image => id === image.id);
+        return state.images.find(image => id === image.astrobin_id);
     },
-    getImages: (state) => state.images
+    getImages: (state) => state.images,
+    loaded: state => state.loaded
 };
 
 export default {

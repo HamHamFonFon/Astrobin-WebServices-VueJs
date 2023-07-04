@@ -6,15 +6,15 @@ import PageImage from '@/components/pages/Image.vue'
 const routes = [
     {
         path: '/',
-        name: 'PageToday',
-        label: 'Image du jour',
+        name: 'Today',
+        label: 'Image of the day',
         component: PageToday,
         icon: 'mdi-star'
     },
     {
-        path: '/image',
+        path: '/image/:astrobinId?',
         name: 'Image',
-        label: 'Image',
+        label: 'Astrobin image',
         component: PageImage,
         icon: 'mdi-star'
     }

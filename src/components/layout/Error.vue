@@ -4,7 +4,7 @@
     type="error"
     icon="$error"
     density="compact"
-    :title="httpCode"
+    :title="title"
     :text="msgError"
   >
   </v-alert>
@@ -15,7 +15,8 @@ export default {
   name: 'ErrorMessage',
   data () {
     return {
-      httpCode: 'Error ' + this.$store.state.error['httpCode'],
+      httpCode: this.$store.state.error['httpCode'],
+      title:  'Error ' + this.$store.state.error['httpCode'],
       msgError: this.$store.state.error['error']
     }
   }

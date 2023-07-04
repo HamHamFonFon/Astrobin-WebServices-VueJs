@@ -19,6 +19,7 @@ export const GET_IMAGE_BY_ID = async (idImage) => {
             astrobin_id: response.data.hash,
             title: response.data.title,
             subjects: response.data.subjects,
+            description: response.data.description,
             uploaded: response.data.uploaded,
             urlGallery: response.data.url_gallery,
             urlThumb: response.data.url_thumb,
