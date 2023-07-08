@@ -41,6 +41,8 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
             }
         })
     } catch (err) {
-        throw new Error('Request error: ' + err.message);
+        const error = new Error(err.message);
+        error.code = 500;
+        throw error;
     }
 };

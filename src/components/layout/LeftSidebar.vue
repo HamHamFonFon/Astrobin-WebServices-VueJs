@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted() {
-    this.routerLinks = this.$router.options.routes
+    this.routerLinks = this.$router.options.routes.filter(route => true === route.leftSide)
   }
 }
 </script>

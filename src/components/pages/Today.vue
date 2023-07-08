@@ -4,7 +4,7 @@
       <v-card>
         <v-toolbar
             color="rgba(0, 0, 0, 0)"
-            theme="dark"
+            theme="light"
         >
           <v-toolbar-title class="text-h6">
             Image of the day
@@ -17,8 +17,10 @@
         <v-container>
           <v-row>
             <v-col>
-              <ErrorMessage />
-              <AstrobinToday></AstrobinToday>
+              <transition-group>
+                <Message v-if="show" />
+                <AstrobinToday v-if="!show"></AstrobinToday>
+              </transition-group>
             </v-col>
           </v-row>
         </v-container>
@@ -28,13 +30,23 @@
 </template>
 
 <script>
-  import ErrorMessage from "@/components/layout/Error.vue";
+  import { mapGetters } from "vuex";
+
+  import Message from "@/components/layout/Message.vue";
   import AstrobinToday from "@/components/astrobin/AstrobinToday.vue";
   export default {
     name: 'PageToday',
     components: {
-      ErrorMessage,
+      Message,
       AstrobinToday
-    }
+    },
+    computed: {
+      ...mapGetters(
+          {'show': 'message/getShow'}
+      ),
+      show() {
+        return this.$store.getters['message/getShow']
+      }
+    },
   }
 </script>

@@ -4,31 +4,36 @@
       <v-card>
         <v-toolbar
           color="rgba(0, 0, 0, 0)"
-          theme="dark"
+          theme="light"
         >
           <v-toolbar-title class="text-h6">
             Astrobin image
           </v-toolbar-title>
         </v-toolbar>
-        <v-divider></v-divider>
+
+
         <v-container>
+         <v-row>
+           <v-col>
+             <v-divider></v-divider>
+             <v-text-field
+               clearable
+               label="AstrobinId"
+               placeholder="Change astrobinId"
+               variant="outlined"
+               @input="updateAstrobinId"
+             ></v-text-field>
+           </v-col>
+         </v-row>
           <v-row>
-            <v-col cols="3">
-              <h3>Filtrer</h3>
-              <v-divider></v-divider>
-              <v-text-field
-                  clearable
-                  label="AstrobinId"
-                  placeholder="Change astrobinId"
-                  variant="outlined"
-              ></v-text-field>
-              <v-btn
-                @click="updateAstrobinId"
-              >Update</v-btn>
-            </v-col>
-            <v-col cols="9">
-              <ErrorMessage />
-              <AstrobinImage :astrobinId="astrobinId"></AstrobinImage>
+            <v-col>
+              <div>
+                <transition-group>
+                  <Message v-if="show" />
+                  <AstrobinImage v-if="!show" :image="image"></AstrobinImage>
+                </transition-group>
+
+              </div>
             </v-col>
           </v-row>
         </v-container>
@@ -38,24 +43,38 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import AstrobinImage from "@/components/astrobin/AstrobinImage.vue"
-import ErrorMessage from "@/components/layout/Error.vue";
+import Message from "@/components/layout/Message.vue";
 
 export default {
   name: "PageImage",
   components: {
     AstrobinImage,
-    ErrorMessage
+    Message
   },
-  data () {
-    return {
-      astrobinId: 'ybdrt3'
+  props: [
+    'astrobinId'
+  ],
+  mounted() {
+    this.$store.dispatch("images/fetchImageById", this.$route.params.astrobinId);
+  },
+  computed: {
+    ...mapGetters(
+        {'image': 'images/getImageById'},
+        {'show': 'message/getShow'}
+    ),
+    image() {
+      return this.$store.getters['images/getImageById'](this.$route.params.astrobinId)
+    },
+    show() {
+      return this.$store.getters['message/getShow']
     }
   },
   methods: {
-    updateAstrobinId(value) {
-      alert(value);
-    }
+    /*updateAstrobinId(newAstrobinId) {
+      console.log(newAstrobinId)
+    }*/
   }
 }
 </script>

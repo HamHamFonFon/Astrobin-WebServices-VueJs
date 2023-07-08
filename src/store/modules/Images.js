@@ -1,8 +1,8 @@
-import { ImagesWs } from '@/repositories/webservices/images/index'
+import { ImagesWs } from '@/repositories/webservices/images'
 
 const state = () => ({
-    images: [],
-    loaded: false
+    images: []//,
+    //loaded: false
 })
 
 const actions = {
@@ -33,24 +33,22 @@ const actions = {
     },
 
     async fetchImageById({ commit }, id) {
-        commit('setLoaded', false);
+        commit('message/setShow', true, { root: true });
+        commit('message/setType', 'info', { root: true });
+        commit('message/setMessage', 'Loading data', { root: true })
+        commit('error/setHttpCode', null, { root: true })
+
         try {
             const wsResponse = await ImagesWs.GET_IMAGE_BY_ID(id);
-            commit("addImage", wsResponse);
-            commit('setLoaded', true);
-        } catch (error) {
-            commit('setLoaded', false);
-            commit('error/setError', error.message, { root: true })
-            commit('error/setHttpCode', error.code, { root: true })
-        }
-    },
-    async updateImageByNewId({ commit}, newId ) {
-        try {
-            const wsResponse = await ImagesWs.GET_IMAGE_BY_ID(newId);
             commit("updateImage", wsResponse);
+            commit('message/setShow', false, { root: true });
+            commit('message/setType', null, { root: true });
+            commit('message/setMessage', '', { root: true })
+            commit('message/setHttpCode', 200, { root: true })
         } catch (error) {
-            commit('error/setError', error.message, { root: true })
-            commit('error/setHttpCode', error.code, { root: true })
+            commit('message/setType', 'error', { root: true });
+            commit('message/setMessage', error.message, { root: true })
+            commit('message/setHttpCode', error.code, { root: true })
         }
     }
 };
@@ -64,9 +62,6 @@ const mutations = {
     },
     setImages: (state, images) => {
         state.images = images;
-    },
-    setLoaded: (state, isLoaded) => {
-        state.loaded = isLoaded
     }
 };
 
@@ -74,8 +69,7 @@ const getters = {
     getImageById: (state) => (id) => {
         return state.images.find(image => id === image.astrobin_id);
     },
-    getImages: (state) => state.images,
-    loaded: state => state.loaded
+    getImages: (state) => state.images
 };
 
 export default {

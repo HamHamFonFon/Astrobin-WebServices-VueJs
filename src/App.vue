@@ -1,12 +1,12 @@
 <template>
-  <v-card theme="dark">
+  <v-card theme="light">
     <v-layout>
 
       <!-- Navbar -->
       <LeftSidebar></LeftSidebar>
 
       <!-- Body -->
-      <v-main theme="dark">
+      <v-main theme="light">
         <router-view />
       </v-main>
 
