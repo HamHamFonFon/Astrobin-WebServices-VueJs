@@ -1,7 +1,7 @@
 const state = () => ({
-    message: 'Load data...',
-    type: 'info',
-    httpCode: 200,
+    message: null,
+    type: 'warning',
+    httpCode: 0,
     show: true
 });
 

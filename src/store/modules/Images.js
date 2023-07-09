@@ -6,7 +6,7 @@ const state = () => ({
 })
 
 const actions = {
-    fetchImages({ commit }, params, offset, limit) {
+    async fetchImages({ commit }, params, offset, limit) {
         const wsResponse = ImagesWs.GET_IMAGES_BY(params, offset, limit);
         wsResponse
             .then(r => {
@@ -33,17 +33,20 @@ const actions = {
     },
 
     async fetchImageById({ commit }, id) {
+        /**
+         * @todo how to use action in Message Store ?
+         */
         commit('message/setShow', true, { root: true });
-        commit('message/setType', 'info', { root: true });
-        commit('message/setMessage', 'Loading data', { root: true })
-        commit('error/setHttpCode', null, { root: true })
+        commit('message/setType', 'warning', { root: true });
+        commit('message/setMessage', 'Loading data...', { root: true })
+        commit('message/setHttpCode', null, { root: true })
 
         try {
             const wsResponse = await ImagesWs.GET_IMAGE_BY_ID(id);
             commit("updateImage", wsResponse);
             commit('message/setShow', false, { root: true });
-            commit('message/setType', null, { root: true });
-            commit('message/setMessage', '', { root: true })
+            commit('message/setType', 'success', { root: true });
+            commit('message/setMessage', 'Data loaded', { root: true })
             commit('message/setHttpCode', 200, { root: true })
         } catch (error) {
             commit('message/setType', 'error', { root: true });

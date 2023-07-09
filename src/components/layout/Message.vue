@@ -1,25 +1,23 @@
 <template>
   <v-alert
     :type="type"
-    icon="mdi-reloading"
-    density="compact"
-    :title="title"
+    border="start"
+    variant="outlined"
+    prominent
+    closable
   >
-    <template v-slot:icon>
-      <img :src="loading" alt="Loading..." width="24" height="24" />
-    </template>
-    <span>{{ msgError }}</span>
+    {{ msgError }}
   </v-alert>
 </template>
 
 <script>
-import loading from '@/assets/images/loading.gif'
+import imgLoading from '@/assets/images/loading.gif'
 
 export default {
   name: 'ErrorMessage',
   data () {
     return {
-      loading: loading,
+      imgLoading: imgLoading,
       show: this.$store.state.message['show'],
       httpCode: this.$store.state.message['httpCode'],
       type: this.$store.state.message['type'],

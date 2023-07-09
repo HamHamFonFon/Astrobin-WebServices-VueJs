@@ -1,5 +1,5 @@
 <template>
-  <v-container class="bg-surface-variant">
+  <v-container class="bg-surface-variant" style="width: 100%;">
     <v-row left="space-around">
       <v-card>
         <v-toolbar
@@ -16,22 +16,23 @@
          <v-row>
            <v-col>
              <v-divider></v-divider>
-             <v-text-field
-               clearable
-               label="AstrobinId"
-               placeholder="Change astrobinId"
-               variant="outlined"
-               @input="updateAstrobinId"
-             ></v-text-field>
+             <div class="d-flex">
+               <v-text-field label="AstrobinId" placeholder="Change astrobinId" class="pt-5 mr-2" variant="outlined" clearable v-model="newAstrobinId"></v-text-field>
+               <v-btn x-large variant="outlined" @click="updateAstrobinId"> CHANGE </v-btn>
+             </div>
+             <v-divider></v-divider>
+
            </v-col>
          </v-row>
           <v-row>
             <v-col>
               <div>
-                <transition-group>
+                <transition>
                   <Message v-if="show" />
+                </transition>
+                <transition>
                   <AstrobinImage v-if="!show" :image="image"></AstrobinImage>
-                </transition-group>
+                </transition>
 
               </div>
             </v-col>
@@ -53,6 +54,11 @@ export default {
     AstrobinImage,
     Message
   },
+  data () {
+    return {
+      newAstrobinId: null
+    }
+  },
   props: [
     'astrobinId'
   ],
@@ -72,9 +78,10 @@ export default {
     }
   },
   methods: {
-    /*updateAstrobinId(newAstrobinId) {
-      console.log(newAstrobinId)
-    }*/
+    updateAstrobinId() {
+      console.log(this.newAstrobinId)
+      this.$store.dispatch("images/fetchImageById", this.newAstrobinId);
+    }
   }
 }
 </script>
