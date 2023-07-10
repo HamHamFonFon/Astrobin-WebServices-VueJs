@@ -6,7 +6,7 @@
       <LeftSidebar></LeftSidebar>
 
       <!-- Body -->
-      <v-main theme="light">
+      <v-main>
         <router-view />
       </v-main>
 

@@ -28,7 +28,9 @@ const buildAstrobinUrl = (endpoint, params) => {
  */
 const buildAstrobinQueryParams = (customParams) => {
     if (!ASTROBIN_QUERY_PARAMS.api_key || !ASTROBIN_QUERY_PARAMS.api_secret) {
-        throw new Error('Astrobin API keys are missing');
+        const error = new Error('Astrobin API keys are missing');
+        error.code = 500;
+        throw error;
     }
 
     return {

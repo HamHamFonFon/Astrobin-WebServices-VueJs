@@ -1,45 +1,28 @@
 <template>
-  <v-container class="bg-surface-variant" style="width: 100%;">
-    <v-row left="space-around">
-      <v-card>
-        <v-toolbar
-          color="rgba(0, 0, 0, 0)"
-          theme="light"
-        >
-          <v-toolbar-title class="text-h6">
-            Astrobin image
-          </v-toolbar-title>
-        </v-toolbar>
+  <v-container>
+    <v-toolbar
+      flat
+    >
+      <v-toolbar-title class="text-h6">
+        Astrobin image
+      </v-toolbar-title>
+    </v-toolbar>
+    <v-divider dark></v-divider>
 
+    <div class="msgInformation">
+      <v-text-field label="AstrobinId" placeholder="Change astrobinId" class="pt-5 mr-2" variant="outlined" clearable v-model="newAstrobinId" disabled></v-text-field>
+      <v-btn x-large variant="outlined" @click="fetchImageById" disabled=""> CHANGE </v-btn>
+    </div>
 
-        <v-container>
-         <v-row>
-           <v-col>
-             <v-divider></v-divider>
-             <div class="d-flex">
-               <v-text-field label="AstrobinId" placeholder="Change astrobinId" class="pt-5 mr-2" variant="outlined" clearable v-model="newAstrobinId"></v-text-field>
-               <v-btn x-large variant="outlined" @click="updateAstrobinId"> CHANGE </v-btn>
-             </div>
-             <v-divider></v-divider>
+    <v-divider></v-divider>
 
-           </v-col>
-         </v-row>
-          <v-row>
-            <v-col>
-              <div>
-                <transition>
-                  <Message v-if="show" />
-                </transition>
-                <transition>
-                  <AstrobinImage v-if="!show" :image="image"></AstrobinImage>
-                </transition>
+    <transition>
+      <Message />
+    </transition>
+    <transition>
+      <AstrobinImage v-if="!isShow" :image="image"></AstrobinImage>
+    </transition>
 
-              </div>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card>
-    </v-row>
   </v-container>
 </template>
 
@@ -67,25 +50,25 @@ export default {
   },
   computed: {
     ...mapGetters(
-        {'image': 'images/getImageById'},
-        {'show': 'message/getShow'}
+      {'image': 'images/getImageById'},
+      {'isShow': 'message/getShow'}
     ),
     image() {
       return this.$store.getters['images/getImageById'](this.$route.params.astrobinId)
     },
-    show() {
+    isShow() {
       return this.$store.getters['message/getShow']
     }
   },
   methods: {
-    updateAstrobinId() {
-      console.log(this.newAstrobinId)
-      this.$store.dispatch("images/fetchImageById", this.newAstrobinId);
-    }
   }
 }
 </script>
 
 <style scoped>
-
+.msgInformation {
+  display: flex;
+  align-items: center;
+  padding: 0 0.2em;
+}
 </style>

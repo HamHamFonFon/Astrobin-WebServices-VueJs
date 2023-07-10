@@ -3,6 +3,11 @@ import * as WS from "@/repositories/webservices/abstractWebservice.js";
 import axios from "axios";
 
 export const GET_IMAGE_BY_ID = async (idImage) => {
+    if ('' === idImage || null === idImage) {
+        const error = new Error('No astrobin ID provided, please fill it one');
+        error.code = 500;
+        throw error;
+    }
     try {
         let astrobinUrl = WS.buildAstrobinUrl(ENDPOINT, idImage);
         let config = WS.buildAstrobinQueryParams(null);
