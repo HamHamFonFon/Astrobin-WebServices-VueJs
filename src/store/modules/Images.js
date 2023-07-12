@@ -32,12 +32,10 @@ const actions = {
     },
 
     async fetchImageById({ commit }, id) {
-        console.log('test id : ' + id);
-
         /**
          * @todo how to use action in Message Store ?
          */
-        commit('message/setShow', true, { root: true });
+        commit('message/setLoading', true, { root: true });
         commit('message/setType', 'warning', { root: true });
         commit('message/setMessage', 'Loading data...', { root: true })
         commit('message/setHttpCode', null, { root: true })
@@ -45,7 +43,6 @@ const actions = {
         try {
             const wsResponse = await ImagesWs.GET_IMAGE_BY_ID(id);
             commit("updateImage", wsResponse);
-            commit('message/setShow', false, { root: true });
             commit('message/setType', 'success', { root: true });
             commit('message/setMessage', 'Data loaded', { root: true })
             commit('message/setHttpCode', 200, { root: true })
@@ -53,8 +50,10 @@ const actions = {
             commit('message/setType', 'error', { root: true });
             commit('message/setMessage', error.message, { root: true })
             commit('message/setHttpCode', error.code, { root: true })
-            commit('message/setShow', true, { root: true });
+            commit('message/setLoading', false, { root: true });
         }
+
+        commit('message/setLoading', false, { root: true });
     }
 };
 

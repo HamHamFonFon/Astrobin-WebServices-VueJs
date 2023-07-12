@@ -1,8 +1,6 @@
 <template>
   <v-container>
-    <v-toolbar
-      flat
-    >
+    <v-toolbar flat >
       <v-toolbar-title class="text-h6">
         Astrobin image
       </v-toolbar-title>
@@ -10,16 +8,16 @@
     <v-divider dark></v-divider>
 
     <div class="msgInformation">
-      <v-text-field label="AstrobinId" placeholder="Change astrobinId" class="pt-5 mr-2" variant="outlined" clearable v-model="newAstrobinId" disabled></v-text-field>
-      <v-btn x-large variant="outlined" @click="fetchImageById" disabled=""> CHANGE </v-btn>
+      <v-text-field label="AstrobinId" placeholder="Change astrobinId" class="pt-5 mr-2" variant="outlined" clearable v-model="newAstrobinId"></v-text-field>
+      <v-btn x-large variant="outlined" @click="updateAstrobinImage"> CHANGE </v-btn>
     </div>
 
     <v-divider></v-divider>
 
-    <transition>
+    <transition name="fade">
       <Message />
     </transition>
-    <transition>
+    <transition name="fade">
       <AstrobinImage v-if="!isShow" :image="image"></AstrobinImage>
     </transition>
 
@@ -27,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters, mapState} from "vuex";
 import AstrobinImage from "@/components/astrobin/AstrobinImage.vue"
 import Message from "@/components/layout/Message.vue";
 
@@ -45,22 +43,28 @@ export default {
   props: [
     'astrobinId'
   ],
+  // Run WS at mount
   mounted() {
     this.$store.dispatch("images/fetchImageById", this.$route.params.astrobinId);
   },
   computed: {
+    // Getter store Image
     ...mapGetters(
-      {'image': 'images/getImageById'},
-      {'isShow': 'message/getShow'}
+      {'image': 'images/getImageById'}
     ),
     image() {
       return this.$store.getters['images/getImageById'](this.$route.params.astrobinId)
     },
+
+    ...mapState({show: state => state.message.show}),
     isShow() {
-      return this.$store.getters['message/getShow']
+      return this.show
     }
   },
   methods: {
+    updateAstrobinImage() {
+      this.$store.dispatch("images/fetchImageById", this.newAstrobinId);
+    }
   }
 }
 </script>
@@ -70,5 +74,15 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 0.2em;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

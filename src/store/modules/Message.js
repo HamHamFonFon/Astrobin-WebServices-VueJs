@@ -2,7 +2,7 @@ const state = () => ({
     message: null,
     type: 'warning',
     httpCode: 0,
-    show: true
+    loading: true
 });
 
 const actions = {
@@ -11,13 +11,9 @@ const actions = {
     }
 };
 
-const getters = {
-    getShow: (state) => state.show
-};
-
 const mutations = {
-    setShow: (state, payload) => {
-        state.show = payload;
+    setLoading: (state, payload) => {
+        state.loading = payload;
     },
     setType: (state, payload) => {
       state.type = payload;
@@ -33,7 +29,6 @@ const mutations = {
 export default {
     namespaced: true,
     state,
-    getters,
     actions,
     mutations
 };

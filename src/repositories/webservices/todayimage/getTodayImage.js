@@ -4,14 +4,32 @@ import axios from "axios";
 
 export const GET_TODAY_IMAGE = async () => {
     const body = {
-        'params': {
-            offset: 0,
-            limit: 1
-        }
+        offset: 0,
+        limit: 1
     };
 
-    let astrobinUrl = WS.buildAstrobinUrl(ENDPOINT, null);
-    let config = WS.buildAstrobinQueryParams(body);
+    try {
+        let astrobinUrl = WS.buildAstrobinUrl(ENDPOINT, null);
+        let config = WS.buildAstrobinQueryParams(body);
 
-    return await axios.get(astrobinUrl, config);
+        const response = await axios.get(astrobinUrl, config);
+        if (200 !== response.status) {
+            const error = new Error(response.statusText);
+            error.code = response.status;
+            throw error;
+        }
+
+        let todayResponse = response.data.objects[0];
+
+        return {
+            date: todayResponse.date,
+            astrobinImageId: todayResponse.image.substr(todayResponse.image.lastIndexOf('/')+1)
+        }
+    } catch (err) {
+        const error = new Error(err.message);
+        error.code = 500;
+        throw error;
+    }
+
+
 };

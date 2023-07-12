@@ -1,4 +1,4 @@
-import { GET_TODAY_IMAGE } from '@/repositories/webservices/getTodayImage';
+import { GET_TODAY_IMAGE } from './getTodayImage';
 // import { GET_TODAY_IMAGES_LIST } from '@/repositories/webservices/getTodayImagesList';
 
 export const TodayWs = {

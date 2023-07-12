@@ -7,7 +7,7 @@ import PageImage from '@/components/pages/Image.vue'
 const routes = [
     {
         path: '/',
-        name: 'Today',
+        name: 'today',
         label: 'Image of the day',
         component: PageToday,
         icon: 'mdi-star',
@@ -15,7 +15,7 @@ const routes = [
     },
     {
         path: '/images',
-        name: 'Images',
+        name: 'images',
         label: 'Images',
         component: ListImages,
         icon: 'mdi-folder',
@@ -23,7 +23,7 @@ const routes = [
     },
     {
         path: '/user',
-        name: 'User',
+        name: 'user',
         label: 'User',
         // component: ListImages,
         icon: 'mdi-account',
@@ -31,7 +31,7 @@ const routes = [
     },
     {
         path: '/image/:astrobinId?',
-        name: 'Image',
+        name: 'image',
         label: 'Astrobin image',
         component: PageImage,
         leftSide: false

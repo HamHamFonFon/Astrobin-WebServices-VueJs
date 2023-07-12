@@ -1,6 +1,6 @@
 <template>
   <v-alert
-    v-if="isShow"
+    v-if="isLoading"
     :type="computedType"
     border="start"
     variant="outlined"
@@ -31,7 +31,7 @@ export default {
     ...mapState({
       msgError: state => state.message.message,
       type: state => state.message.type,
-      show: state => state.message.show
+      loading: state => state.message.loading
     }),
     computedMsg() {
       return this.msgError;
@@ -39,8 +39,8 @@ export default {
     computedType() {
       return this.type
     },
-    isShow() {
-      return this.show
+    isLoading() {
+      return this.loading
     }
   }
 }
