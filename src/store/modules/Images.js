@@ -37,15 +37,15 @@ const actions = {
          */
         commit('message/setLoading', true, { root: true });
         commit('message/setType', 'warning', { root: true });
-        commit('message/setMessage', 'Loading data...', { root: true })
+        commit('message/setMessage', 'Loading astrobin image "' + id + '"', { root: true })
         commit('message/setHttpCode', null, { root: true })
 
         try {
             const wsResponse = await ImagesWs.GET_IMAGE_BY_ID(id);
-            commit("updateImage", wsResponse);
             commit('message/setType', 'success', { root: true });
-            commit('message/setMessage', 'Data loaded', { root: true })
+            commit('message/setMessage', 'Image "' + wsResponse.title + '" loaded', { root: true })
             commit('message/setHttpCode', 200, { root: true })
+            commit("updateImage", wsResponse);
         } catch (error) {
             commit('message/setType', 'error', { root: true });
             commit('message/setMessage', error.message, { root: true })
@@ -72,8 +72,7 @@ const mutations = {
 const getters = {
     getImageById: (state) => (id) => {
         return state.images.find(image => id === image.astrobin_id);
-    },
-    getImages: (state) => state.images
+    }
 };
 
 export default {

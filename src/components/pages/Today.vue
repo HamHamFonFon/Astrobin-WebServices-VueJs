@@ -2,7 +2,7 @@
   <v-container>
     <v-toolbar flat>
       <v-toolbar-title class="text-h6">
-            Image of the day
+        Image of the day
       </v-toolbar-title>
     </v-toolbar>
     <v-divider></v-divider>

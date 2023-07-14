@@ -18,7 +18,7 @@
       <Message />
     </transition>
     <transition name="fade">
-      <AstrobinImage v-if="!isShow" :image="image"></AstrobinImage>
+      <AstrobinImage v-if="!isLoading && image" :image="image"></AstrobinImage>
     </transition>
 
   </v-container>
@@ -37,15 +37,15 @@ export default {
   },
   data () {
     return {
+      astrobinId: null,
       newAstrobinId: null
     }
   },
-  props: [
-    'astrobinId'
-  ],
   // Run WS at mount
-  mounted() {
-    this.$store.dispatch("images/fetchImageById", this.$route.params.astrobinId);
+  mounted: function () {
+    this.image = null;
+    this.astrobinId = this.$route.params.astrobinId;
+    this.$store.dispatch("images/fetchImageById", this.astrobinId);
   },
   computed: {
     // Getter store Image
@@ -53,17 +53,19 @@ export default {
       {'image': 'images/getImageById'}
     ),
     image() {
-      return this.$store.getters['images/getImageById'](this.$route.params.astrobinId)
+      return this.$store.getters['images/getImageById'](this.astrobinId)
     },
-
-    ...mapState({show: state => state.message.show}),
-    isShow() {
-      return this.show
+    ...mapState(
+      { loading: state => state.message.loading }
+    ),
+    isLoading() {
+      return this.loading;
     }
   },
   methods: {
     updateAstrobinImage() {
-      this.$store.dispatch("images/fetchImageById", this.newAstrobinId);
+      this.astrobinId = this.newAstrobinId;
+      this.$store.dispatch("images/fetchImageById", this.astrobinId);
     }
   }
 }

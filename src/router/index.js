@@ -10,7 +10,7 @@ const routes = [
         name: 'today',
         label: 'Image of the day',
         component: PageToday,
-        icon: 'mdi-star',
+        icon: 'mdi-home',
         leftSide: true
     },
     {
