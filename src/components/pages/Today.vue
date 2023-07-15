@@ -21,6 +21,7 @@ import { mapState} from "vuex";
 
 import Message from "@/components/layout/Message.vue";
 import AstrobinToday from "@/components/astrobin/AstrobinToday.vue";
+
 export default {
   name: 'PageToday',
   components: {
@@ -35,6 +36,6 @@ export default {
     isLoading() {
       return this.isLoading
     }
-  },
+  }
 }
 </script>
