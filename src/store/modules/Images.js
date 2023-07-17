@@ -1,31 +1,39 @@
 import { ImagesWs } from '@/repositories/webservices/images'
 
-const state = () => ({
-    images: [],
-    totalCount: 0,
-})
+const initialState = () => {
+    return {
+        images: [],
+        totalCount: 0,
+        offset: 0
+    }
+};
+const state = initialState;
 
 const actions = {
     /**
      *
      * @param commit
      * @param params
+     * @param formData
      * @param offset
      * @param limit
      * @returns {Promise<void>}
      */
     async fetchImages({ commit }, { formData, offset, limit}) {
-
+        commit('resetState');
         commit('message/setLoading', true, { root: true });
         commit('message/setType', 'warning', { root: true });
         commit('message/setMessage', 'Loading astrobin images', { root: true })
         commit('message/setHttpCode', null, { root: true })
         try {
-            const wsResponse = await ImagesWs.GET_IMAGES_BY(formData, offset, limit);
+            let params = {};
+            params[formData.type] = formData.term;
+            const wsResponse = await ImagesWs.GET_IMAGES_BY(params, offset, limit);
             commit('message/setType', 'success', { root: true });
             commit('message/setMessage', 'Images loaded', { root: true })
             commit('message/setHttpCode', 200, { root: true })
             commit('setTotalCount', wsResponse.totalCount);
+            commit('setOffset', wsResponse.offset);
             wsResponse.listImages.forEach(image => {
                 commit('addImage', image);
             });
@@ -74,6 +82,12 @@ const actions = {
 };
 
 const mutations = {
+    resetState: (state) => {
+        const s = initialState();
+        Object.keys(s).forEach(key => {
+            state[key] = s[key];
+        })
+    },
     addImage: (state, image) => {
         state.images.push(image);
     },
@@ -82,12 +96,18 @@ const mutations = {
     },
     setTotalCount: (state, totalCount) => {
         state.totalCount = totalCount;
+    },
+    setOffset: (state, offset) => {
+      state.offset = offset;
     }
 };
 
 const getters = {
     getImageById: (state) => (id) => {
         return state.images.find(image => id === image.astrobin_id);
+    },
+    getTotalCount: (state) => {
+        return state.images.totalCount;
     }
 };
 

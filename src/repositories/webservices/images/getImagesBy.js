@@ -29,7 +29,6 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
             'limit': limit
         };
 
-        params = {'subjects': 'm42'};
         let astrobinUrl = WS.buildAstrobinUrl(ENDPOINT, null);
         let config = WS.buildAstrobinQueryParams(
             {
@@ -48,6 +47,7 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
 
         return {
             totalCount: response.data.meta.total_count,
+            offset: response.data.meta.offset,
             listImages: response.data.objects.map(image => {
                 return {
                     id: image.id,

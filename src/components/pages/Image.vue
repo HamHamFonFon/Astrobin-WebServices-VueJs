@@ -17,6 +17,7 @@
     <transition name="fade">
       <Message />
     </transition>
+
     <transition name="fade">
       <AstrobinImage v-if="!isLoading && image" :image="image"></AstrobinImage>
     </transition>
@@ -43,7 +44,7 @@ export default {
   },
   // Run WS at mount
   mounted: function () {
-    this.image = null;
+    //this.image = null;
     this.astrobinId = this.$route.params.astrobinId;
     this.$store.dispatch("images/fetchImageById", this.astrobinId);
   },
@@ -56,7 +57,8 @@ export default {
       return this.$store.getters['images/getImageById'](this.astrobinId)
     },
     ...mapState(
-      { loading: state => state.message.loading }
+      { loading: state => state.message.loading },
+      { totalCount: state => state.images }
     ),
     isLoading() {
       return this.loading;

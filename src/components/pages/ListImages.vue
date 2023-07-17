@@ -10,7 +10,7 @@
         inline
       >
         <v-select
-          label="Select"
+          label="Type"
           v-model="formData.type"
           :items="items"
           item-value="key"
@@ -20,6 +20,7 @@
           clearable
         ></v-select>
         <v-text-field
+          label="Term"
           v-model="formData.term"
           variant="outlined"
           required
@@ -36,34 +37,34 @@
       <Message></Message>
     </transition>
 
-    <transition-group name="fade" tag="div" class="images">
-      <p>{{ totalCount }}</p>
-      <div v-if="!isLoading && 0 < totalCount">
-        <span v-for="(image, index) in listImages" :key="index"> {{ image.title }}</span>
-        <btn
-        >
-          More
-        </btn>
-      </div>
-
-    </transition-group>
-
+    <AstrobinListImages v-if="!isLoading && 0 < totalCount" :images="images"></AstrobinListImages>
+    <v-divider></v-divider>
+    <transition>
+      <v-btn v-if="totalCount > countItems"> More </v-btn>
+    </transition>
   </v-container>
 </template>
 
 <script>
 
+import { mapState } from "vuex";
+
 import Message from "@/components/layout/Message.vue";
-import {mapState} from "vuex";
+import AstrobinListImages from "@/components/astrobin/AstrobinListImages.vue";
+
 
 export default {
   name: "ListImages",
   components: {
-    Message
+    Message,
+    AstrobinListImages
+  },
+  created() {
+    this.$store.commit('message/setLoading', false);
+    this.$store.commit('images/setTotalCount', 0);
   },
   mounted: function () {
-    this.images = null;
-    this.totalCount = 0
+    this.offset = 20;
   },
   data() {
     return {
@@ -81,18 +82,17 @@ export default {
   },
   computed: {
     ...mapState(
-        { loading: state => state.message.loading },
-        { images: state => state.images.images },
-        { totalCount: state => state.images.totalCount }
+        //{ loading: state => state.message.loading },
+        { images: state => state.images }
     ),
     isLoading() {
       return this.loading;
     },
     totalCount() {
-      return this.totalCount;
+      return this.images.totalCount;
     },
-    listImages() {
-      return this.images;
+    countItems() {
+      return this.images.length;
     }
   },
   methods: {
@@ -104,5 +104,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
