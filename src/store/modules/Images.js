@@ -20,7 +20,9 @@ const actions = {
      * @returns {Promise<void>}
      */
     async fetchImages({ commit }, { formData, offset, limit}) {
-        commit('resetState');
+        if (0 === offset) {
+            commit('resetState');
+        }
         commit('message/setLoading', true, { root: true });
         commit('message/setType', 'warning', { root: true });
         commit('message/setMessage', 'Loading astrobin images', { root: true })

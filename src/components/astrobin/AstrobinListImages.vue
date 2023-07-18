@@ -1,49 +1,53 @@
 <template>
-
-  <transition>
-    <div>Résults: {{ images.totalCount }}</div>
-  </transition>
-
-  <v-divider></v-divider>
-
-  <transition-group>
-    <article v-for="(image, index) in images.images" :key="index" class="card">
-      <router-link :to="{ name: 'image', params: { astrobinId: image.astrobinImageId } }">
-        <div class="image">
-          <figure>
-            <img :src="image.urlRegular" :alt="image.title">
-            <figcaption>{{ image.title}}</figcaption>
-          </figure>
-        </div>
-        <div class="description">
-            <span class="playcount">
-              <span v-bind:style="{width: m_percentage(33) + '%'}"></span>
-            </span>
-          <h3 class="title" :data-id="image.astrobinId">{{ image.title }}</h3>
-          <p class="artist" v-if="image.description">{{ image.description.substr(0, 50) }}</p>
-          <p class="artist">{{ image.user }}</p>
-        </div>
+  <div><p>Résults: {{ images.totalCount }}</p></div>
+  <v-spacer></v-spacer>
+  <v-row>
+    <v-col
+      v-for="(image, n) in images.images"
+      :key="n"
+      class="d-flex child_flex"
+      cols="3"
+    >
+      <router-link :to="{ name: 'image', params: { astrobinId: image.astrobin_id } }">
+        <v-card
+            class="mx-auto"
+            max-width="400"
+        >
+          <v-img
+            :src="image.urlRegular"
+            :lazy-src="image.urlGallery"
+            aspect-ratio="1"
+            cover
+            class="bg-grey-lighten-2"
+          >
+            <template v-slot:placeholder>
+              <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+              >
+                <v-progress-circular
+                  indeterminate
+                  color="grey-lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+          <v-card-text>
+            <div>"{{ image.title }}" by {{ image.user }}</div>
+          </v-card-text>
+        </v-card>
       </router-link>
-    </article>
-  </transition-group>
-  <div>
+    </v-col>
+  </v-row>
 
-
-
-  </div>
 </template>
 
 <script>
-
 export default {
   name: "AstrobinListImages",
   props: {
     images: {}
-  },
-  methods: {
-    m_percentage: function (value) {
-      return parseInt((value * 100) / this.$data.maxPlayCount);
-    },
   }
 }
 </script>

@@ -27,12 +27,14 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-
-
 #app {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-top: 60px;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
