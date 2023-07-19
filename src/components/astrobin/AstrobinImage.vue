@@ -41,7 +41,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <v-card-subtitle>{{ image.user}} - {{ image.uploaded }}</v-card-subtitle>
+        <v-card-subtitle>{{ image.description }}</v-card-subtitle>
         <v-card-actions>
           <v-btn
               color="orange-lighten-2"
@@ -54,14 +54,28 @@
         </v-card-actions>
         <v-expand-transition>
           <div v-show="show">
-            <v-divider></v-divider>
-            <v-card-text>{{ image.description }}</v-card-text>
+            <v-list-item
+                v-for="(item, i) in listItems"
+                :key="i"
+                :value="item"
+                color="primary"
+            >
+              <template v-slot:prepend>
+                <v-icon :icon="item.icon"></v-icon>
+              </template>
+
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item>
+
           </div>
         </v-expand-transition>
 
         <v-divider></v-divider>
+        <v-card-title v-if="0 < image.subjects.length">Subjects</v-card-title>
         <div class="image__chips" v-if="0 < image.subjects.length">
-          <v-chip v-for="chip in image.subjects" :key="chip">{{ chip }}</v-chip>
+          <v-chip-group>
+            <v-chip v-for="chip in image.subjects" :key="chip">{{ chip }}</v-chip>
+          </v-chip-group>
         </div>
       </v-card-item>
     </v-card>
@@ -73,7 +87,13 @@ export default {
   name: "AstrobinImage",
   data () {
     return {
-      show: false // 'haqtej'
+      show: false,
+      listItems: [
+        { text: this.image.user, icon: 'mdi-account'},
+        { text: this.image.likes, icon: 'mdi-heart'},
+        { text: this.image.views, icon: 'mdi-eye'},
+        { text: this.image.uploaded, icon: 'mdi-clock'},
+      ]
     }
   },
   props: {
@@ -81,6 +101,7 @@ export default {
       default: null,
       type: Object
     }
-  }
+  },
+
 }
 </script>

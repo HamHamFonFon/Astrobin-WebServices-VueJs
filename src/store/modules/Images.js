@@ -4,7 +4,8 @@ const initialState = () => {
     return {
         images: [],
         totalCount: 0,
-        offset: 0
+        offset: 0,
+        sortCriteria: ''
     }
 };
 const state = initialState;
@@ -101,6 +102,9 @@ const mutations = {
     },
     setOffset: (state, offset) => {
       state.offset = offset;
+    },
+    setSortCriteria: (state, criteria) => {
+        state.sortCriteria = criteria;
     }
 };
 
@@ -108,8 +112,17 @@ const getters = {
     getImageById: (state) => (id) => {
         return state.images.find(image => id === image.astrobin_id);
     },
-    getTotalCount: (state) => {
-        return state.images.totalCount;
+    sortedImages: (state) => {
+        if ('' === state.sortCriteria) {
+            return state.images;
+        }
+
+        return [...state.images].sort((a, b) => {
+            if ('likes' === state.sortCriteria) return (a.likes > b.likes) ? -1 : ((b.likes > a.likes) ? 1 : 0)
+            if ('views' === state.sortCriteria) return (a.views > b.views) ? -1 : ((b.views > a.views) ? 1 : 0)
+            if ('uploaded_most' === state.sortCriteria) return new Date(b.uploaded) - new Date(a.uploaded)
+            if ('uploaded_old' === state.sortCriteria) return new Date(a.uploaded) - new Date(b.uploaded)
+        });
     }
 };
 

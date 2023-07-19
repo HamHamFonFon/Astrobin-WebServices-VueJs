@@ -17,7 +17,7 @@
                 md="6"
             >
               <v-select
-                label="Type"
+                label="Filtering by..."
                 v-model="formData.type"
                 :items="items"
                 item-value="key"
@@ -32,7 +32,7 @@
               md="6"
             >
               <v-text-field
-                label="Term"
+                label="Search terms"
                 v-model="formData.term"
                 variant="outlined"
                 required
@@ -41,8 +41,8 @@
               </v-text-field>
             </v-col>
             <v-col
-                cols="2"
-                md="2"
+              cols="2"
+              md="2"
             >
               <v-btn type="submit" x-large variant="outlined"> Search </v-btn>
             </v-col>
@@ -51,11 +51,24 @@
       </v-form>
     </v-sheet>
 
+    <v-sheet class="mx-auto">
+      <v-select
+        v-model="selectedSort"
+        :disabled="0 === totalCount"
+        label="Sort by..."
+        :items="sortResults"
+        item-value="key"
+        item-title="value"
+        variant="outlined"
+        @change="sortImages"
+        clearable
+      ></v-select>
+    </v-sheet>
+
     <v-spacer></v-spacer>
     <v-divider></v-divider>
     <v-spacer></v-spacer>
-
-    <AstrobinListImages v-if="!isLoading && 0 < totalCount" :images="images"></AstrobinListImages>
+    <AstrobinListImages v-if="!isLoading && 0 < totalCount" :images="sortedImages" :totalCount="totalCount"></AstrobinListImages>
     <transition name="fade">
       <Message></Message>
     </transition>
@@ -65,14 +78,14 @@
       variant="outlined"
       v-if="totalCount > countItems"
       @click="moreItems"
-    > More </v-btn>
+    > Show more </v-btn>
 
   </v-container>
 </template>
 
 <script>
 
-import { mapState } from "vuex";
+import {mapGetters, mapState} from "vuex";
 
 import Message from "@/components/layout/Message.vue";
 import AstrobinListImages from "@/components/astrobin/AstrobinListImages.vue";
@@ -94,25 +107,31 @@ export default {
   data() {
     return {
       items: [
-        {key: 'subjects', value: 'Subjects'},
-        {key: 'user', value: 'User'},
         {key: 'title__icontains', value: 'Title contains...'},
-        {key: 'description__icontains', value: 'Description contains...'}
+        {key: 'description__icontains', value: 'Description contains...'},
+        {key: 'subjects', value: 'Subjects'},
+      ],
+      sortResults: [
+        {key: 'likes', value: 'Number of likes'},
+        {key: 'views', value: 'Number of views'},
+        {key: 'uploaded_most', value: 'Most recent'},
+        {key: 'uploaded_old', value: 'Less recent'},
+        {key: 'title', value: 'Title'}
       ],
       formData: {
         type: '',
         term: ''
-      }
+      },
+      selectedSort: ''
     }
   },
   computed: {
+    ...mapGetters({
+      sortedImages: 'images/sortedImages'
+    }),
     ...mapState(
-        //{ loading: state => state.message.loading },
         { images: state => state.images }
     ),
-    isLoading() {
-      return this.loading;
-    },
     totalCount() {
       return this.images.totalCount;
     },
@@ -121,6 +140,9 @@ export default {
     },
     countItems() {
       return this.images.images.length;
+    },
+    isLoading() {
+      return this.loading;
     }
   },
   methods: {
@@ -129,7 +151,13 @@ export default {
     },
     async moreItems () {
       this.$store.dispatch('images/fetchImages', { formData: this.formData, offset: this.currentOffset, limit: 20 });
+    },
+    updateSortingCriteria () {
+      this.$store.commit('images/setSortCriteria', this.selectedSort);
     }
+  },
+  watch: {
+    selectedSort: 'updateSortingCriteria'
   }
 }
 </script>

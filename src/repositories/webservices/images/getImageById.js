@@ -32,7 +32,9 @@ export const GET_IMAGE_BY_ID = async (idImage) => {
             urlHd: response.data.url_hd,
             user: response.data.user,
             urlHistogram: response.data.url_histogram,
-            urlSkyplot: response.data.url_skyplot
+            urlSkyplot: response.data.url_skyplot,
+            views: response.data.views,
+            likes: response.data.likes
         }
     } catch (err) {
         const error = new Error(err.message);

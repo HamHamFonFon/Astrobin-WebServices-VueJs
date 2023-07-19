@@ -57,8 +57,7 @@ export default {
       return this.$store.getters['images/getImageById'](this.astrobinId)
     },
     ...mapState(
-      { loading: state => state.message.loading },
-      { totalCount: state => state.images }
+      { loading: state => state.message.loading }
     ),
     isLoading() {
       return this.loading;

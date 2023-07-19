@@ -62,7 +62,9 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
                     urlHd: image.url_hd,
                     user: image.user,
                     urlHistogram: image.url_histogram,
-                    urlSkyplot: image.url_skyplot
+                    urlSkyplot: image.url_skyplot,
+                    views: image.views,
+                    likes: image.likes
                 }
             })
         };

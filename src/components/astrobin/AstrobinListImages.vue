@@ -1,9 +1,9 @@
 <template>
-  <div><p>Résults: {{ images.totalCount }}</p></div>
+  <div><p>Résults: {{ totalCount }}</p></div>
   <v-spacer></v-spacer>
   <v-row>
     <v-col
-      v-for="(image, n) in images.images"
+      v-for="(image, n) in images"
       :key="n"
       class="d-flex child_flex"
       cols="3"
@@ -32,10 +32,18 @@
                 ></v-progress-circular>
               </v-row>
             </template>
+            <v-card-title class="text-h6 text-white d-flex flex-column">
+              <p class="mt-4">{{ image.title }}</p>
+            </v-card-title>
           </v-img>
-          <v-card-text>
-            <div>"{{ image.title }}" by {{ image.user }}</div>
+
+          <v-card-text class="pt-6">
+            <div class="font-weight-light text-grey text-h6 mb-2">
+              By {{ image.user }}
+            </div>
+
           </v-card-text>
+
         </v-card>
       </router-link>
     </v-col>
@@ -47,7 +55,8 @@
 export default {
   name: "AstrobinListImages",
   props: {
-    images: {}
+    images: Object,
+    totalCount: Number
   }
 }
 </script>
