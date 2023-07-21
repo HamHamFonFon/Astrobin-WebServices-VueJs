@@ -1,5 +1,7 @@
 <template>
-  <v-container>
+  <v-container
+    fluid
+  >
     <v-toolbar>
       <v-toolbar-title>Search Astrobin Images by...</v-toolbar-title>
     </v-toolbar>
@@ -112,8 +114,8 @@ export default {
         {key: 'subjects', value: 'Subjects'},
       ],
       sortResults: [
-        {key: 'likes', value: 'Number of likes'},
-        {key: 'views', value: 'Number of views'},
+        {key: 'likes', value: 'Most liked'},
+        {key: 'views', value: 'Most viewed'},
         {key: 'uploaded_most', value: 'Most recent'},
         {key: 'uploaded_old', value: 'Less recent'},
         {key: 'title', value: 'Title'}

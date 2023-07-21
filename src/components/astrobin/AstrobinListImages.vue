@@ -16,7 +16,7 @@
           <v-img
             :src="image.urlRegular"
             :lazy-src="image.urlGallery"
-            aspect-ratio="1"
+            height="300"
             cover
             class="bg-grey-lighten-2"
           >
