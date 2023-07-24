@@ -1,5 +1,7 @@
 <template>
-  <div><p>Résults: {{ totalCount }}</p></div>
+  <div>
+    <span>Résults: {{ totalCount }}</span>
+  </div>
   <v-spacer></v-spacer>
   <v-row>
     <v-col

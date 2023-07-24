@@ -1,9 +1,19 @@
 <template>
   <div id="today">
-    <h2>{{ today.date }}</h2>
 
     <router-link :to="{ name: 'image', params: { astrobinId: today.astrobinImageId } }">
-      <img :src="today.image.urlHd" style="max-width: 100%;" />
+      <v-img
+        :src="today.image.urlHd"
+        cover
+      >
+        <v-row class="fill-height" align="center" justify="center">
+          <div class="text-h2 text-white">
+            <span>{{ today.date }}</span>
+            <div class="text-h4 text-white">{{ today.image.title }}</div>
+            <div class="text-h5 text-white">{{ today.image.user }}</div>
+          </div>
+        </v-row>
+      </v-img>
     </router-link>
   </div>
 </template>

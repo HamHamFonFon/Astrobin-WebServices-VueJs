@@ -1,7 +1,5 @@
-import { GET_TODAY_IMAGE } from './getTodayImage';
-// import { GET_TODAY_IMAGES_LIST } from '@/repositories/webservices/getTodayImagesList';
+import { GET_TODAYS_IMAGE } from './getTodayImage';
 
 export const TodayWs = {
-    GET_TODAY_IMAGE,
-    // GET_TODAY_IMAGES_LIST
+    GET_TODAYS_IMAGE
 };

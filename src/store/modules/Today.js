@@ -4,10 +4,16 @@ import { ImagesWs } from '@/repositories/webservices/images'
 const state = () => ({
     date: null,
     image: {},
-    astrobinImageId: null
+    astrobinImageId: null,
+    listTodayImages: []
 });
 
 const actions = {
+    /**
+     *
+     * @param commit
+     * @returns {Promise<void>}
+     */
     async fetchImageOfTheDay({commit}) {
         commit('message/setLoading', true, { root: true });
         commit('message/setType', 'warning', { root: true });
@@ -15,7 +21,7 @@ const actions = {
         commit('message/setHttpCode', null, { root: true })
 
         try {
-            const wsResponse = await TodayWs.GET_TODAY_IMAGE();
+            const wsResponse = await TodayWs.GET_TODAYS_IMAGE(0, 1);
             const wsResponseImage = await ImagesWs.GET_IMAGE_BY_ID(wsResponse.astrobinImageId);
 
             commit("setDate", wsResponse.date);
@@ -32,13 +38,32 @@ const actions = {
         }
         commit('message/setLoading', false, { root: true });
     },
+    /**
+     *
+     * @param commit
+     * @returns {Promise<void>}
+     */
+    async fetchListImagesOfTheDay({commit}) {
+        try {
+            commit('resetStateListImages');
+            const wsResponse = await TodayWs.GET_TODAYS_IMAGE(1, 16);
+            wsResponse.forEach(response => {
+                const wsResponseImage = ImagesWs.GET_IMAGE_BY_ID(response.astrobinImageId);
+                wsResponseImage.then(r => {
+                    commit("addTodayImage", { image: r.urlRegular, date: response.date, title: r.title });
+                })
 
-    // async fetchListImagesOfTheDay({commit}, limit, offset) {
-    //
-    // }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 };
 
 const mutations = {
+    resetStateListImages: (state) => {
+        state.listTodayImages = [];
+    },
     setDate: (state, date) => {
         state.date = date;
     },
@@ -47,12 +72,24 @@ const mutations = {
     },
     setImage: (state, image) => {
         state.image = image;
-    }
+    },
+    addTodayImage: (state, todayImage) => {
+        state.listTodayImages.push(todayImage);
+    },
 };
+
+const getters = {
+    sortedTodayImages: (state) => {
+        return [...state.listTodayImages].sort((a, b) => {
+            return new Date(b.date) - new Date(a.date)
+        });
+    }
+}
 
 export default {
     namespaced: true,
     state,
     mutations,
-    actions
+    actions,
+    getters
 };

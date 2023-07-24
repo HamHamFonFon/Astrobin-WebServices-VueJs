@@ -70,18 +70,21 @@
     <v-spacer></v-spacer>
     <v-divider></v-divider>
     <v-spacer></v-spacer>
+
     <AstrobinListImages v-if="!isLoading && 0 < totalCount" :images="sortedImages" :totalCount="totalCount"></AstrobinListImages>
     <transition name="fade">
       <Message></Message>
     </transition>
-    <v-spacer></v-spacer>
-    <v-btn
-      prepend-icon="mdi-plus"
-      variant="outlined"
-      v-if="totalCount > countItems"
-      @click="moreItems"
-    > Show more </v-btn>
 
+    <v-row align="center" justify="center">
+      <v-btn
+          prepend-icon="mdi-plus"
+          variant="outlined"
+          primary
+          v-if="totalCount > countItems"
+          @click="moreItems"
+      > <span>Show more</span> </v-btn>
+    </v-row>
   </v-container>
 </template>
 
@@ -91,7 +94,6 @@ import {mapGetters, mapState} from "vuex";
 
 import Message from "@/components/layout/Message.vue";
 import AstrobinListImages from "@/components/astrobin/AstrobinListImages.vue";
-
 
 export default {
   name: "ListImages",
@@ -152,7 +154,7 @@ export default {
       this.$store.dispatch('images/fetchImages', { formData: this.formData, offset: 0, limit: 20 });
     },
     async moreItems () {
-      this.$store.dispatch('images/fetchImages', { formData: this.formData, offset: this.currentOffset, limit: 20 });
+      this.$store.dispatch('images/fetchImages', { formData: this.formData, offset: (this.currentOffset+20), limit: 20 });
     },
     updateSortingCriteria () {
       this.$store.commit('images/setSortCriteria', this.selectedSort);

@@ -2,10 +2,10 @@ import { ENDPOINT } from './endpoint'
 import * as WS from "@/repositories/webservices/abstractWebservice.js";
 import axios from "axios";
 
-export const GET_TODAY_IMAGE = async () => {
+export const GET_TODAYS_IMAGE = async (offset, limit) => {
     const body = {
-        offset: 0,
-        limit: 1
+        offset: offset,
+        limit: limit
     };
 
     try {
@@ -19,17 +19,25 @@ export const GET_TODAY_IMAGE = async () => {
             throw error;
         }
 
-        let todayResponse = response.data.objects[0];
-
-        return {
-            date: todayResponse.date,
-            astrobinImageId: todayResponse.image.substr(todayResponse.image.lastIndexOf('/')+1)
+        if (1 === limit) {
+            let todayResponse = response.data.objects[0];
+            return {
+                date: todayResponse.date,
+                astrobinImageId: todayResponse.image.substr(todayResponse.image.lastIndexOf('/')+1)
+            }
+        } else {
+            let listObjects = response.data.objects;
+            return listObjects.map(todayResponse => {
+                return {
+                    date: todayResponse.date,
+                    astrobinImageId: todayResponse.image.substr(todayResponse.image.lastIndexOf('/')+1)
+                }
+            });
         }
+
     } catch (err) {
         const error = new Error(err.message);
         error.code = 500;
         throw error;
     }
-
-
 };
