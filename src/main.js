@@ -17,8 +17,13 @@ const vuetify = createVuetify({
     directives,
 })
 
-createApp(App)
+// Masonry
+import MasonryWall from '@yeger/vue-masonry-wall'
+
+const app = createApp(App);
+app
     .use(router)
     .use(store)
     .use(vuetify)
-    .mount('#app')
+    .use(MasonryWall)
+    .mount('#app');

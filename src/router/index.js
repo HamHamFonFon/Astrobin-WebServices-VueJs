@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomePage from "@/components/pages/Homepage.vue";
-import PageToday from '@/components/pages/Today.vue'
-import ListImages from '@/components/pages/ListImages.vue'
-import PageImage from '@/components/pages/Image.vue'
+import HomePage from "@/views/Homepage.vue";
+import PageToday from '@/views/Today.vue'
+import ListImages from '@/views/ListImages.vue'
+import PageImage from '@/views/Image.vue'
 
 const routes = [
     {
         path: '/',
         name: 'Homepage',
-        label: 'Homepage',
+        label: 'Home',
         component: HomePage,
         icon: 'mdi-home-city-outline',
-        leftSide: true
+        leftSide: false
     },
     {
         path: '/image-of-the-day',

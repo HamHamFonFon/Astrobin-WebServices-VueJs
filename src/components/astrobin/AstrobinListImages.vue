@@ -3,54 +3,50 @@
     <span>Résults: {{ totalCount }}</span>
   </div>
   <v-spacer></v-spacer>
-  <v-row>
-    <v-col
-      v-for="(image, n) in images"
-      :key="n"
-      class="d-flex child_flex"
-      cols="3"
+  <v-container>
+
+    <masonry-wall
+      :items="images"
+      :min-columns="1"
+      :max-columns="5"
+      :column-width="300"
+      :gap="30"
     >
-      <router-link :to="{ name: 'image', params: { astrobinId: image.astrobin_id } }">
-        <v-card
-            class="mx-auto"
-            max-width="400"
-        >
-          <v-img
-            :src="image.urlRegular"
-            :lazy-src="image.urlGallery"
-            height="300"
-            cover
-            class="bg-grey-lighten-2"
-          >
-            <template v-slot:placeholder>
-              <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
-              >
-                <v-progress-circular
-                  indeterminate
-                  color="grey-lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-            <v-card-title class="text-h6 text-white d-flex flex-column">
-              <p class="mt-4">{{ image.title }}</p>
-            </v-card-title>
-          </v-img>
-
-          <v-card-text class="pt-6">
-            <div class="font-weight-light text-grey text-h6 mb-2">
-              By {{ image.user }}
-            </div>
-
-          </v-card-text>
-
-        </v-card>
-      </router-link>
-    </v-col>
-  </v-row>
-
+      <template #default="{ item }">
+        <router-link :to="{ name: 'image', params: { astrobinId: item.astrobin_id } }">
+          <v-card>
+            <v-img
+              :src="item.urlRegular"
+              :lazy-src="item.urlGallery"
+              cover
+              class="bg-grey-lighten-2"
+            >
+              <template v-slot:placeholder>
+                <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                >
+                  <v-progress-circular
+                      indeterminate
+                      color="grey-lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+              <v-card-title class="text-h6 text-white d-flex flex-column">
+                <p class="mt-4">{{ item.title }}</p>
+              </v-card-title>
+            </v-img>
+            <v-card-text class="pt-6">
+              <div class="font-weight-light text-grey text-h6 mb-2">
+                By {{ item.user }}
+              </div>
+            </v-card-text>
+          </v-card>
+        </router-link>
+      </template>
+    </masonry-wall>
+  </v-container>
 </template>
 
 <script>
@@ -59,6 +55,11 @@ export default {
   props: {
     images: Object,
     totalCount: Number
+  },
+  methods: {
+    append() {
+      alert('coucou');
+    }
   }
 }
 </script>

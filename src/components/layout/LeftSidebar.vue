@@ -1,53 +1,58 @@
 <template>
-  <div>
-    <v-navigation-drawer
-        v-model="drawer"
-        :rail="rail"
-        permanent
-        @click="rail = false"
+  <v-navigation-drawer
+      :rail="rail"
+      absolute
+      color="#283E4B"
+  >
+    <!-- Show/Hide -->
+    <v-list-item
+      prepend-icon="mdi-chevron-right"
+      @click="rail = false"
     >
+      <template v-slot:append>
+        <v-btn
+          variant="text"
+          icon="mdi-chevron-left"
+          @click.stop="rail = !rail"
+        ></v-btn>
+      </template>
+    </v-list-item>
+
+    <!-- HOME -->
+    <v-divider></v-divider>
+    <v-list-item
+      prepend-icon="mdi-home"
+      title="Homepage"
+      value="Homepage"
+      to="/"
+      light
+    >
+    </v-list-item>
+    <v-divider></v-divider>
+
+    <!-- Page -->
+    <v-list density="compact" color="white" nav >
       <v-list-item
-          :prepend-avatar="imageLogo"
-          title="Astrobin API"
-          nav
+        v-for="route in routerLinks" :key="route.path"
+        :prepend-icon="route.icon"
+        :title="route.label"
+        :value="route.name"
+        :to="route.path"
+        light
       >
-        <template v-slot:append>
-          <v-btn
-              variant="text"
-              icon="mdi-chevron-left"
-              @click.stop="rail = !rail"
-          ></v-btn>
-        </template>
       </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list density="compact" nav>
-          <v-list-item v-for="route in routerLinks" :key="route.path"
-            :prepend-icon="route.icon"
-            :title="route.label"
-            :value="route.name"
-            :to="route.path"
-          >
-          </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-  </div>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>
-
-import imageLogo from '@/assets/images/astro_otter_200-200.png'
 
 export default {
   name: "LeftSidebar",
   data() {
     return {
-      imageLogo: imageLogo,
       routerLinks: [],
-      drawer: true,
-      rail: true,
+      rail: true
     }
   },
   mounted() {
