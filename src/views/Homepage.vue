@@ -3,15 +3,15 @@
       fluid
       class="home-hero align-center"
   >
-    <!--    <v-toolbar-->
-    <!--        extended-->
-    <!--        extension-height="300"-->
-    <!--    >-->
-    <!--      <v-toolbar-title class="mx-auto text-white">-->
-    <!--        <span>Welcome to astrobin API</span>-->
-    <!--        <h2>Discover wonders and mysteries of the universe.</h2>-->
-    <!--      </v-toolbar-title>-->
-    <!--    </v-toolbar>-->
+        <v-toolbar
+            extended
+            transparent
+        >
+          <v-toolbar-title class="mx-auto text-white">
+            <span>Welcome to astrobin API</span>
+            <h2>Discover wonders and mysteries of the universe.</h2>
+          </v-toolbar-title>
+        </v-toolbar>
 
     <v-row>
       <v-col cols="12" md="6" v-for="(page, index) in this.routerLinks" v-bind:key="index">
@@ -35,7 +35,7 @@
           </v-img>
 
           <v-divider></v-divider>
-          <v-card-title class="text-h3">
+          <v-card-title class="text-h4">
             {{ page.label }}
           </v-card-title>
 

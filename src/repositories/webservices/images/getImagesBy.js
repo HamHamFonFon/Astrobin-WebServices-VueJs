@@ -32,7 +32,6 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
         let astrobinUrl = WS.buildAstrobinUrl(ENDPOINT, null);
         let config = WS.buildAstrobinQueryParams(
             {
-                //...params,
                 ...params,
                 ...customParams
             }

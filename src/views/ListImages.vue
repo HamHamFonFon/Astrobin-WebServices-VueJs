@@ -112,6 +112,7 @@ export default {
       pageTitle: 'search Astrobin Images',
       items: [
         {key: 'title__icontains', value: 'Title contains...'},
+        {key: 'user', value: 'Images from user...'},
         {key: 'description__icontains', value: 'Description contains...'},
         {key: 'subjects', value: 'Subjects'},
       ],

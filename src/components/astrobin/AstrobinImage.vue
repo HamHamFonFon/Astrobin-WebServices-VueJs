@@ -64,7 +64,9 @@
                 <v-icon :icon="item.icon"></v-icon>
               </template>
 
-              <v-list-item-title v-text="item.text"></v-list-item-title>
+              <v-list-item-title>
+                {{ item.text }}
+              </v-list-item-title>
             </v-list-item>
 
           </div>
@@ -89,7 +91,7 @@ export default {
     return {
       show: false,
       listItems: [
-        { text: this.image.user, icon: 'mdi-account'},
+        { text: this.image.user, icon: 'mdi-account', link: true},
         { text: this.image.likes, icon: 'mdi-heart'},
         { text: this.image.views, icon: 'mdi-eye'},
         { text: this.image.uploaded, icon: 'mdi-clock'},

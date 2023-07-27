@@ -4,6 +4,7 @@ import HomePage from "@/views/Homepage.vue";
 import PageToday from '@/views/Today.vue'
 import ListImages from '@/views/ListImages.vue'
 import PageImage from '@/views/Image.vue'
+import PageUser from '@/views/User.vue'
 
 const routes = [
     {
@@ -38,10 +39,10 @@ const routes = [
         leftSide: true
     },
     {
-        path: '/user',
+        path: '/user/:username?',
         name: 'user',
         label: 'User',
-        // component: ListImages,
+        component: PageUser,
         icon: 'mdi-account',
         leftSide: true
     },
