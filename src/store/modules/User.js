@@ -3,7 +3,7 @@ import { ImagesWs } from '@/repositories/webservices/images'
 const initialState = () => {
     return {
         data: {},
-        listImages: []
+        images: []
     }
 }
 
@@ -18,12 +18,15 @@ const actions = {
 
         try {
             const wsResponse = await UserWs.GET_USER_BY_NAME(userName);
+            commit('setUser', wsResponse);
             if (wsResponse.username && 0 < wsResponse.image_count) {
                 commit('resetListImages');
-                const wsResponseImages = await ImagesWs.GET_IMAGES_BY({'user': wsResponse.username}, 0, wsResponse.image_count );
-                wsResponseImages.listImages.forEach(img => commit('addUserImage', img));
+                const wsResponseImages = ImagesWs.GET_IMAGES_BY({'user': wsResponse.username}, 0, 20 );
+                wsResponseImages.then(r => {
+                    r.listImages.forEach(img => commit('addUserImage', img))
+                });
             }
-            commit('setUser', wsResponse);
+
             commit('message/setType', 'success', { root: true });
             commit('message/setMessage', 'User and images loaded', { root: true })
             commit('message/setHttpCode', 200, { root: true })
@@ -40,10 +43,10 @@ const actions = {
 
 const mutations = {
     resetListImages: (state) => {
-        state.listImages = [];
+        state.images = [];
     },
     addUserImage: (state, image) => {
-        state.listImages.push(image);
+        state.images.push(image);
     },
     setUser: (state, user) => {
         state.data = user;

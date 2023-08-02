@@ -77,11 +77,11 @@
 
     <v-row align="center" justify="center">
       <v-btn
-          prepend-icon="mdi-plus"
-          variant="outlined"
-          primary
-          v-if="totalCount > countItems"
-          @click="moreItems"
+        prepend-icon="mdi-plus"
+        variant="outlined"
+        primary
+        v-if="totalCount > countItems"
+        @click="moreItems"
       > <span>Show more</span> </v-btn>
     </v-row>
   </v-container>

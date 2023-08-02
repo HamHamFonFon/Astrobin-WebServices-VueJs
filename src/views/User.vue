@@ -1,15 +1,41 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <transition name="fade">
       <Message/>
     </transition>
-    <transition name="fade">
-      <div v-if="!isLoading">
-        {{ userData }}
+<!--    <transition name="fade">-->
+<!--        <v-avatar v-if="null !== userData.avatar" :image="userData.avatar"></v-avatar>-->
+<!--        <v-title>{{ userData.username }}</v-title>-->
+<!--    </transition>-->
 
-        <AstrobinListImages v-if="!isLoading && 0 < totalImages" :images="listImages" :totalCount="totalImages"></AstrobinListImages>
-      </div>
-    </transition>
+    <masonry-wall
+      :items="listImages"
+      :min-columns="3"
+      :max-column="6"
+      :ssr-columns="1"
+      :column-width="300"
+      :gap="5"
+    >
+      <template #default="{ item, index }">
+        <v-card
+            color="grey-lighten-1"
+            :class="['ma-4']"
+            :data-index="index"
+        >
+          <v-img
+            cover
+            :src="item.image"
+          >
+            <div class="d-flex fill-height align-center justify-center">
+              <div class="text-h4 text-white">{{ item.date }}
+                <div class="text-h6 text-white">{{ item.title }}</div>
+              </div>
+            </div>
+          </v-img>
+        </v-card>
+      </template>
+
+    </masonry-wall>
   </v-container>
 
 
@@ -30,7 +56,7 @@ export default {
   components: {
     Message
   },
-  mounted() {
+  mounted: function () {
     this.username = this.$route.params.username;
     this.$store.dispatch('user/getUserByName', this.username)
   },
@@ -42,10 +68,10 @@ export default {
       return this.user.data;
     },
     listImages() {
-      return this.user.listImages;
+      return this.user.images;
     },
     totalImages() {
-      return this.user.listImages.length;
+      return this.user.data.image_count;
     },
     isLoading() {
       return this.isLoading

@@ -8,43 +8,38 @@
     </transition>
 
     <v-divider></v-divider>
-    <div>Last 10 images of the day</div>
+    <div>
+      <h3>Last 10 images of the day</h3>
+    </div>
 
-    <v-sheet
-      class="mx-auto"
-      elevation="8"
+    <masonry-wall
+      :items="sortedTodayImage"
+      :min-columns="3"
+      :max-column="6"
+      :ssr-columns="1"
+      :column-width="300"
+      :gap="5"
     >
-      <v-slide-group
-        v-model="model"
-        class="pa-8"
-        selected-class="bg-primary"
-        show-arrows
-        center-active
-      >
-        <v-slide-group-item
-            v-for="(todaySlideImage, n) in sortedTodayImage"
-            :key="n"
-            v-slot="{ selectedClass }"
+      <template #default="{ item, index }">
+        <v-card
+          color="grey-lighten-1"
+          :class="['ma-4']"
+          :data-index="index"
         >
-          <v-card
-            color="grey-lighten-1"
-            :class="['ma-4', selectedClass]"
-            max-height="500"
+          <v-img
+            cover
+            :src="item.image"
           >
-            <v-img
-              cover
-              :src="todaySlideImage.image"
-            >
-              <div class="d-flex fill-height align-center justify-center">
-                <div class="text-h4 text-white">{{ todaySlideImage.date }}
-                  <div class="text-h6 text-white">{{ todaySlideImage.title }}</div>
-                </div>
+            <div class="d-flex fill-height align-center justify-center">
+              <div class="text-h4 text-white">{{ item.date }}
+                <div class="text-h6 text-white">{{ item.title }}</div>
               </div>
-            </v-img>
-          </v-card>
-        </v-slide-group-item>
-      </v-slide-group>
-    </v-sheet>
+            </div>
+          </v-img>
+        </v-card>
+      </template>
+
+    </masonry-wall>
   </v-container>
 </template>
 
