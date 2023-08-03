@@ -30,14 +30,14 @@ const actions = {
             commit('message/setType', 'success', { root: true });
             commit('message/setMessage', 'User and images loaded', { root: true })
             commit('message/setHttpCode', 200, { root: true })
+            commit('message/setLoading', false, { root: true });
         } catch (error) {
+            console.log('coucou', error)
             commit('message/setType', 'error', { root: true });
             commit('message/setMessage', error.message, { root: true })
             commit('message/setHttpCode', error.code, { root: true })
             commit('message/setLoading', true, { root: true });
         }
-
-        commit('message/setLoading', false, { root: true });
     }
 };
 

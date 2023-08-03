@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
     <transition name="fade">
-      <Message/>
+      <Message />
     </transition>
-<!--    <transition name="fade">-->
-<!--        <v-avatar v-if="null !== userData.avatar" :image="userData.avatar"></v-avatar>-->
-<!--        <v-title>{{ userData.username }}</v-title>-->
-<!--    </transition>-->
+    <transition name="fade" v-if="!isLoading">
+      <AstrobinUser v-if="!isLoading" :user="userData" />
+
+    </transition>
 
     <masonry-wall
       :items="listImages"
@@ -45,6 +45,7 @@
 import { mapState } from "vuex";
 
 import Message from "@/components/layout/Message.vue";
+import AstrobinUser from "@/components/content/AstrobinUser.vue";
 
 export default {
   name: "PageUser",
@@ -54,10 +55,12 @@ export default {
     }
   },
   components: {
-    Message
+    Message,
+    AstrobinUser
   },
   mounted: function () {
-    this.username = this.$route.params.username;
+    this.username = this.$route.params.username ?? 'siovene';
+
     this.$store.dispatch('user/getUserByName', this.username)
   },
   computed: {

@@ -20,25 +20,7 @@
       :column-width="300"
       :gap="5"
     >
-      <template #default="{ item, index }">
-        <v-card
-          color="grey-lighten-1"
-          :class="['ma-4']"
-          :data-index="index"
-        >
-          <v-img
-            cover
-            :src="item.image"
-          >
-            <div class="d-flex fill-height align-center justify-center">
-              <div class="text-h4 text-white">{{ item.date }}
-                <div class="text-h6 text-white">{{ item.title }}</div>
-              </div>
-            </div>
-          </v-img>
-        </v-card>
-      </template>
-
+      <MasonryCard :item="item" />
     </masonry-wall>
   </v-container>
 </template>
@@ -47,11 +29,13 @@
 import { mapState, mapGetters } from "vuex";
 
 import Message from "@/components/layout/Message.vue";
-import AstrobinToday from "@/components/astrobin/AstrobinToday.vue";
+import AstrobinToday from "@/components/content/AstrobinToday.vue";
+import MasonryCard from "@/components/astrobin/MasonryCard.vue";
 
 export default {
   name: 'PageToday',
   components: {
+    MasonryCard,
     Message,
     AstrobinToday
   },

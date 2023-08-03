@@ -40,15 +40,13 @@ const actions = {
             wsResponse.listImages.forEach(image => {
                 commit('addImage', image);
             });
-
+            commit('message/setLoading', false, { root: true });
         } catch (error) {
             commit('message/setType', 'error', { root: true });
             commit('message/setMessage', error.message, { root: true })
             commit('message/setHttpCode', error.code, { root: true })
             commit('message/setLoading', true, { root: true });
         }
-
-        commit('message/setLoading', false, { root: true });
     },
 
     /**
@@ -73,14 +71,13 @@ const actions = {
             commit('message/setHttpCode', 200, { root: true })
             commit("updateImage", wsResponse);
             commit('setTotalCount', 1);
+            commit('message/setLoading', false, { root: true });
         } catch (error) {
             commit('message/setType', 'error', { root: true });
             commit('message/setMessage', error.message, { root: true })
             commit('message/setHttpCode', error.code, { root: true })
             commit('message/setLoading', true, { root: true });
         }
-
-        commit('message/setLoading', false, { root: true });
     }
 };
 

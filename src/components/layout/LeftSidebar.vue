@@ -1,9 +1,73 @@
 <template>
   <v-navigation-drawer
-      :rail="rail"
-      absolute
-      color="#283E4B"
+    border="non"
+    elevation="1"
+    id="mainMenu"
+    color="#283E4B"
   >
+    <!-- TOP AREA -->
+    <template v-slot:prepend>
+      <v-card
+          style="box-shadow: rgba(0, 0, 0, 0.05) 0px 25px 15px -20px"
+          class="d-flex align-center justify-center"
+      >
+        <img
+            width="200"
+            src="@/assets/images/astro_otter_200-200.png"
+            alt=""
+        />
+      </v-card>
+    </template>
+
+    <!-- ITEMS AREA-->
+    <MenuSidebar />
+
+    <!-- BOTTOM AREA -->
+    <template v-slot:append>
+      <v-card
+          theme="dark"
+          height="225"
+          class="pa-3"
+          variant="text"
+          style="box-shadow: rgba(0, 0, 0, 0.05) 0px -25px 15px -20px"
+      >
+        <v-card
+          class="d-flex flex-column gradient pa-2"
+          height="200"
+        >
+          <v-card-title>
+            <v-btn
+                class="mr-2"
+                size="40"
+                color="white"
+                :class="`text-grey`"
+                icon
+            >
+              <Icon width="30" icon="line-md:github-loop" />
+            </v-btn>
+            MEAUDRE Stéphane
+          </v-card-title>
+          <v-card-subtitle> </v-card-subtitle>
+          <v-card-text>
+            <div><b>Github:</b></div>
+            <div>github.com/HamHamFonFon</div>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              color="white"
+              block
+              prepend-icon="mdi-thumb-up-outline"
+              variant="elevated"
+              @click="openGithubSite"
+            >
+              Star-Me
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-card>
+    </template>
+
+
     <!-- Show/Hide -->
     <v-list-item
       prepend-icon="mdi-chevron-right"
@@ -47,16 +111,15 @@
 
 <script>
 
+import MenuSidebar from "@/components/layout/MenuSidebar.vue";
+
 export default {
   name: "LeftSidebar",
-  data() {
-    return {
-      routerLinks: [],
-      rail: true
+  components: {MenuSidebar},
+  methods: {
+    openGithubSite() {
+      window.open('https://github.com/HamHamFonFon/', '_blank')
     }
-  },
-  mounted() {
-    this.routerLinks = this.$router.options.routes.filter(route => true === route.leftSide)
   }
 }
 </script>

@@ -20,7 +20,7 @@
 
 <script>
 import {mapGetters, mapState} from "vuex";
-import AstrobinImage from "@/components/astrobin/AstrobinImage.vue"
+import AstrobinImage from "@/components/content/AstrobinImage.vue"
 import Message from "@/components/layout/Message.vue";
 
 export default {

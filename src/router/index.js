@@ -9,34 +9,23 @@ import PageUser from '@/views/User.vue'
 const routes = [
     {
         path: '/',
-        name: 'Homepage',
-        label: 'Home',
+        name: 'dashboard',
         component: HomePage,
-        icon: 'mdi-home-city-outline',
-        leftSide: false
     },
     {
         path: '/image-of-the-day',
         name: 'today',
-        label: 'Image of the day',
         component: PageToday,
-        icon: 'mdi-trophy',
-        leftSide: true
     },
     {
         path: '/toppicks',
         name: 'toppicks',
-        label: 'Top-picks',
-        icon: 'mdi-star',
-        leftSide: true
+        component: null
     },
     {
         path: '/images',
         name: 'images',
-        label: 'Images',
         component: ListImages,
-        icon: 'mdi-image-multiple',
-        leftSide: true
     },
     {
         path: '/user/:username?',
@@ -44,14 +33,12 @@ const routes = [
         label: 'User',
         component: PageUser,
         icon: 'mdi-account',
-        leftSide: true
     },
     {
         path: '/image/:astrobinId?',
         name: 'image',
         label: 'Astrobin image',
         component: PageImage,
-        leftSide: false
     }
 ];
 
