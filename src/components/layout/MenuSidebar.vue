@@ -3,9 +3,28 @@
     class="menu-list"
     nav
     dense
-    color="primary"
   >
-
+    <template
+      v-for="menuArea in this.menu" v-bind:key="menuArea.key"
+    >
+      <div class="pa-1 mt-2 text-overline">
+        {{ menuArea.text}}
+      </div>
+      <template v-if="menuArea.items">
+        <template
+          v-for="menuItem in menuArea.items"
+          v-bind:key="menuItem.key"
+        >
+          <v-list-item
+            :prepend-icon="menuItem.icon || 'mdi-circle-medium'"
+            density="compact"
+            :to="getPath(menuItem.routeName)"
+          >
+            <v-list-item-title v-text="menuItem.text"></v-list-item-title>
+          </v-list-item>
+        </template>
+      </template>
+    </template>
   </v-list>
 </template>
 
@@ -18,8 +37,19 @@ export default {
       rail: true
     }
   },
-  mounted() {
-    this.routerLinks = this.$router.options.routes.filter(route => true === route.leftSide)
+  props: {
+    menu: {
+      type: Array,
+      default: null
+    }
   },
+  created() {
+    this.routerLinks = this.$router.options.routes
+  },
+  methods: {
+    getPath (routeName) {
+      return this.routerLinks.filter(route => route.name === routeName)[0].path;
+    }
+  }
 }
 </script>

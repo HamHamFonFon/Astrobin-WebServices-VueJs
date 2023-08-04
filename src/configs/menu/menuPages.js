@@ -18,9 +18,9 @@ export default [
         routeName: 'images'
     },
     {
-        key: "menu.dashboard",
-        text: "Dashboard",
-        icon: "mdi-view-dashboard-outline",
-        routeName: 'dashboard'
+        key: "menu.user",
+        text: "User",
+        icon: "mdi-account",
+        routeName: 'user'
     }
 ]

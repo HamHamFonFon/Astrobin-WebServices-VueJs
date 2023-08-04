@@ -1,26 +1,26 @@
 <template>
-  <v-layout class="rounded rounded-md">
+  <v-app theme="light" class="rounded rounded-md">
     <!-- Navbar -->
     <LeftSidebar />
     <!-- Header -->
-    <HeaderTitle :initialPageTitle="pageTitle" />
+    <AppBar :initialPageTitle="pageTitle" />
     <!-- Body -->
     <v-main class="pt-2 pt-sm-2 pt-xs-2 pt-md-0 pt-lg-0 pt-xl-0">
       <router-view />
     </v-main>
-  </v-layout>
+  </v-app>
 </template>
 
 <script>
 import LeftSidebar  from '@/components/layout/LeftSidebar.vue'
-import HeaderTitle from '@/components/layout/Header.vue'
+import AppBar from '@/components/layout/AppBar.vue'
 // import VueBaseLayout from '@/layouts/layout.vue'
 
 export default {
   name: 'App',
   components: {
     LeftSidebar,
-    HeaderTitle
+    AppBar
   },
   data() {
     return {

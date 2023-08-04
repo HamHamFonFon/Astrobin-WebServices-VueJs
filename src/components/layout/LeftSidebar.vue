@@ -3,13 +3,16 @@
     border="non"
     elevation="1"
     id="mainMenu"
-    color="#283E4B"
+    v-model="this.$store.state.customizedTheme.showSideBar"
+    :color="this.$store.state.customizedTheme.sideBarColor"
   >
     <!-- TOP AREA -->
-    <template v-slot:prepend>
+    <template
+      v-slot:prepend
+    >
       <v-card
-          style="box-shadow: rgba(0, 0, 0, 0.05) 0px 25px 15px -20px"
-          class="d-flex align-center justify-center"
+        style="box-shadow: rgba(0, 0, 0, 0.05) 0px 25px 15px -20px; padding: 0.2em;"
+        class="d-flex align-center justify-center"
       >
         <img
             width="200"
@@ -20,12 +23,11 @@
     </template>
 
     <!-- ITEMS AREA-->
-    <MenuSidebar />
+    <MenuSidebar :menu="navigation.menu" />
 
     <!-- BOTTOM AREA -->
     <template v-slot:append>
       <v-card
-          theme="dark"
           height="225"
           class="pa-3"
           variant="text"
@@ -37,13 +39,12 @@
         >
           <v-card-title>
             <v-btn
-                class="mr-2"
-                size="40"
-                color="white"
-                :class="`text-grey`"
-                icon
+              class="mr-2"
+              size="40"
+              :class="`text-grey`"
+              icon
             >
-              <Icon width="30" icon="line-md:github-loop" />
+              <v-icon width="30" icon="line-md:github-loop" />
             </v-btn>
             MEAUDRE Stéphane
           </v-card-title>
@@ -67,55 +68,21 @@
       </v-card>
     </template>
 
-
-    <!-- Show/Hide -->
-    <v-list-item
-      prepend-icon="mdi-chevron-right"
-      @click="rail = false"
-    >
-      <template v-slot:append>
-        <v-btn
-          variant="text"
-          icon="mdi-chevron-left"
-          @click.stop="rail = !rail"
-        ></v-btn>
-      </template>
-    </v-list-item>
-
-    <!-- HOME -->
-    <v-divider></v-divider>
-    <v-list-item
-      prepend-icon="mdi-home"
-      title="Homepage"
-      value="Homepage"
-      to="/"
-      light
-    >
-    </v-list-item>
-    <v-divider></v-divider>
-
-    <!-- Page -->
-    <v-list density="compact" color="white" nav >
-      <v-list-item
-        v-for="route in routerLinks" :key="route.path"
-        :prepend-icon="route.icon"
-        :title="route.label"
-        :value="route.name"
-        :to="route.path"
-        light
-      >
-      </v-list-item>
-    </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
-
+import configs from "@/configs";
 import MenuSidebar from "@/components/layout/MenuSidebar.vue";
 
 export default {
   name: "LeftSidebar",
   components: {MenuSidebar},
+  data() {
+    return {
+      navigation: configs.navigation
+    }
+  },
   methods: {
     openGithubSite() {
       window.open('https://github.com/HamHamFonFon/', '_blank')
