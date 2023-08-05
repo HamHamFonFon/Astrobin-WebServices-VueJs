@@ -7,7 +7,7 @@
     <template
       v-for="menuArea in this.menu" v-bind:key="menuArea.key"
     >
-      <div class="pa-1 mt-2 text-overline">
+      <div class="pa-1 mt-2 text-overline" :color="this.$store.state.customizedTheme.sideBarTextColor">
         {{ menuArea.text}}
       </div>
       <template v-if="menuArea.items">
@@ -19,6 +19,7 @@
             :prepend-icon="menuItem.icon || 'mdi-circle-medium'"
             density="compact"
             :to="getPath(menuItem.routeName)"
+            :color="this.$store.state.customizedTheme.sideBarTextColor"
           >
             <v-list-item-title v-text="menuItem.text"></v-list-item-title>
           </v-list-item>
@@ -29,12 +30,12 @@
 </template>
 
 <script>
+
 export default {
   name: "MenuSidebar",
   data() {
     return {
       routerLinks: [],
-      rail: true
     }
   },
   props: {

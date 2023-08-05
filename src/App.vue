@@ -1,37 +1,38 @@
 <template>
-  <v-app theme="light" class="rounded rounded-md">
-    <!-- Navbar -->
-    <LeftSidebar />
-    <!-- Header -->
-    <AppBar :initialPageTitle="pageTitle" />
-    <!-- Body -->
-    <v-main class="pt-2 pt-sm-2 pt-xs-2 pt-md-0 pt-lg-0 pt-xl-0">
-      <router-view />
-    </v-main>
+  <v-app theme="light" :data-layout="layoutName">
+    <component :is="currentLayout" v-if="isRouterLoaded">
+      <router-view></router-view>
+    </component>
   </v-app>
 </template>
 
 <script>
-import LeftSidebar  from '@/components/layout/LeftSidebar.vue'
-import AppBar from '@/components/layout/AppBar.vue'
-// import VueBaseLayout from '@/layouts/layout.vue'
+
+import DefaultLayout from '@/layouts/Default.vue'
+import HomeLayout from '@/layouts/Home.vue'
+import PageLayout from '@/layouts/Page.vue'
+import { useRoute } from "vue-router";
+
+const layouts = {
+  default: DefaultLayout,
+  home: HomeLayout,
+  page: PageLayout
+};
 
 export default {
   name: 'App',
-  components: {
-    LeftSidebar,
-    AppBar
-  },
-  data() {
+  setup() {
+    const route = useRoute();
+    const layoutName = route.meta.layout;
+    const currentLayout = (!layoutName) ? DefaultLayout : layouts[layoutName];
+    const isRouterLoaded = (route.name !== null);
+
     return {
-      pageTitle: '',
+      layoutName,
+      currentLayout,
+      isRouterLoaded
     }
-  },
-  // computed: {
-  //   component() {
-  //     return VueBaseLayout
-  //   }
-  // }
+  }
 }
 </script>
 
@@ -47,12 +48,5 @@ export default {
 a {
   text-decoration: none;
 }
-
-.bottom-menu {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-}
-
 
 </style>

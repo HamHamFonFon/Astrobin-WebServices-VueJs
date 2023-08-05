@@ -11,21 +11,33 @@ const routes = [
         path: '/',
         name: 'dashboard',
         component: HomePage,
+        meta: {
+            layout: 'home'
+        }
     },
     {
         path: '/image-of-the-day',
         name: 'today',
         component: PageToday,
+        meta: {
+            layout: 'page'
+        }
     },
     {
         path: '/toppicks',
         name: 'toppicks',
-        component: null
+        component: null,
+        meta: {
+            layout: 'page'
+        }
     },
     {
         path: '/images',
         name: 'images',
         component: ListImages,
+        meta: {
+            layout: 'page'
+        }
     },
     {
         path: '/user/:username?',
@@ -33,12 +45,18 @@ const routes = [
         label: 'User',
         component: PageUser,
         icon: 'mdi-account',
+        meta: {
+            layout: 'page'
+        }
     },
     {
         path: '/image/:astrobinId?',
         name: 'image',
         label: 'Astrobin image',
         component: PageImage,
+        meta: {
+            layout: 'page'
+        }
     }
 ];
 

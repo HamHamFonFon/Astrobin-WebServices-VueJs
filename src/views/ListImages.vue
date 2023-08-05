@@ -1,6 +1,6 @@
 <template>
   <v-container
-    fluid
+    class="h-full"
   >
     <v-sheet class="mx-auto">
       <v-form

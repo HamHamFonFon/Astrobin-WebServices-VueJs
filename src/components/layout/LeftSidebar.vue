@@ -15,9 +15,9 @@
         class="d-flex align-center justify-center"
       >
         <img
-            width="200"
-            src="@/assets/images/astro_otter_200-200.png"
-            alt=""
+          width="200"
+          src="@/assets/images/astro_otter_200-200.png"
+          alt=""
         />
       </v-card>
     </template>

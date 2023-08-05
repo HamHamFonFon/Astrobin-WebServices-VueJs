@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "HomeCard",
+  name: "ItemCard",
   props: {
     item: {
       type: Object,

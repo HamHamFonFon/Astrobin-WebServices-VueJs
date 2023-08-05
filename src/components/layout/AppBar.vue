@@ -1,17 +1,18 @@
 <template>
   <v-app-bar
     density="default"
-    color="#1B2A32"
+    :color="this.$store.state.customizedTheme.appBarColor"
   >
     <div class="px-2 d-flex align-center justify-space-between w-100">
       <v-app-bar-nav-icon
         @click="showOrHideSideBar"
       >
       </v-app-bar-nav-icon>
-      <v-app-bar-title>
+      <v-app-bar-title
+        :color="this.$store.state.customizedTheme.textColor"
+      >
         <span>Astrobin API</span>
         <v-divider vertical thickness="2" color="black" class="ml-5 mr-1"></v-divider>
-        <span>Titre de la page</span>
       </v-app-bar-title>
 
     </div>
@@ -26,11 +27,6 @@ export default {
       type: String,
       default: '',
     },
-  },
-  data() {
-    return {
-      pageTitle: this.initialPageTitle
-    }
   },
   methods: {
     updatePageTitle(newTitle) {

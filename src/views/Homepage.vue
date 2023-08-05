@@ -5,15 +5,14 @@
       <v-col cols="12" xl="4">
         <v-card cols="12" xl="6">
           <v-card class="card-shadow" height="420">
-            <span>Welcome to astrobin API</span>
-            <h2>Discover wonders and mysteries of the universe.</h2>
+            <PresentationCard></PresentationCard>
           </v-card>
         </v-card>
       </v-col>
 
       <v-col cols="12" md="6" xl="4">
-        <v-card class="card-shadow" height="420" v-for="homeItem in this.homeItems" v-bind:key="homeItem.key">
-          <HomeCard :item="homeItem"></HomeCard>
+        <v-card class="card-shadow h-full" height="420" v-for="homeItem in this.homeItems" v-bind:key="homeItem.key">
+          <ItemCard :item="homeItem"></ItemCard>
         </v-card>
       </v-col>
     </v-row>
@@ -22,18 +21,20 @@
 
 <script>
 
-import configs from "@/configs";
-import HomeCard from "@/components/content/HomeCard.vue";
+import homeItems from "@/configs/menu/menuPages";
+import ItemCard from "@/components/home/ItemCard.vue";
+import PresentationCard from "@/components/home/PresentationCard.vue";
 export default {
   name: "HomePage",
   components: {
-    HomeCard
+    PresentationCard,
+    ItemCard
   },
   data() {
     return {
       pageTitle: 'Homepage',
       routerLinks: [],
-      homeItems: configs.homeItems
+      homeItems: homeItems
     }
   },
   mounted() {
