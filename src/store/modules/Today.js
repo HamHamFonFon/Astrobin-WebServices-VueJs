@@ -46,7 +46,7 @@ const actions = {
     async fetchListImagesOfTheDay({commit}) {
         try {
             commit('resetStateListImages');
-            const wsResponse = await TodayWs.GET_TODAYS_IMAGE(1, 16);
+            const wsResponse = await TodayWs.GET_TODAYS_IMAGE(1, 20);
             wsResponse.forEach(response => {
                 const wsResponseImage = ImagesWs.GET_IMAGE_BY_ID(response.astrobinImageId);
                 wsResponseImage.then(r => {

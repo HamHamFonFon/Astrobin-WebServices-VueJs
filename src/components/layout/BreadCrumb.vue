@@ -1,12 +1,24 @@
 <template>
   <v-breadcrumbs
     class="ml-n3 text-body-2"
-  ></v-breadcrumbs>
+    :items="items"
+  >
+    <template v-slot:divider>
+      <v-icon icon="mdi-chevron-right"></v-icon>
+    </template>
+  </v-breadcrumbs>
+  <v-divider></v-divider>
 </template>
 
 <script>
+
 export default {
-  name: "BreadCrumb"
+  name: "BreadCrumb",
+  data() {
+    return {
+      items: ['Home', 'Page']
+    }
+  }
 }
 </script>
 

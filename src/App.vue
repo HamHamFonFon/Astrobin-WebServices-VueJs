@@ -1,39 +1,21 @@
 <template>
-  <v-app theme="light" :data-layout="layoutName">
-    <component :is="currentLayout" v-if="isRouterLoaded">
+  <v-app theme="light">
+    <component :is="layout">
       <router-view></router-view>
     </component>
   </v-app>
 </template>
 
-<script>
+<script setup>
+import { provide, shallowRef} from "vue";
+import router from "@/router";
+import layouts from "@/layouts";
 
-import DefaultLayout from '@/layouts/Default.vue'
-import HomeLayout from '@/layouts/Home.vue'
-import PageLayout from '@/layouts/Page.vue'
-import { useRoute } from "vue-router";
-
-const layouts = {
-  default: DefaultLayout,
-  home: HomeLayout,
-  page: PageLayout
-};
-
-export default {
-  name: 'App',
-  setup() {
-    const route = useRoute();
-    const layoutName = route.meta.layout;
-    const currentLayout = (!layoutName) ? DefaultLayout : layouts[layoutName];
-    const isRouterLoaded = (route.name !== null);
-
-    return {
-      layoutName,
-      currentLayout,
-      isRouterLoaded
-    }
-  }
-}
+const layout = shallowRef('div');
+router.afterEach((to) => {
+  layout.value = layouts[to.meta.layout] || layouts['default']
+});
+provide('app:layout', layout);
 </script>
 
 <style>

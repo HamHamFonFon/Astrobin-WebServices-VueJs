@@ -23,7 +23,7 @@
     </template>
 
     <!-- ITEMS AREA-->
-    <MenuSidebar :menu="navigation.menu" />
+    <MenuSidebar :menu="navigation.menu" :allRoutes="allRoutes" />
 
     <!-- BOTTOM AREA -->
     <template v-slot:append>
@@ -81,6 +81,11 @@ export default {
   data() {
     return {
       navigation: configs.navigation
+    }
+  },
+  computed: {
+    allRoutes() {
+      return this.$router.options.routes;
     }
   },
   methods: {

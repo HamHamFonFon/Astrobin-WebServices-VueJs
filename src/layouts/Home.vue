@@ -2,7 +2,8 @@
   <!-- Navbar -->
   <LeftSidebar />
   <!-- Header -->
-  <AppBar :initialPageTitle="pageTitle" />
+  <AppBar />
+
   <!-- Body -->
   <v-main class="main-container"
     v-touch="{

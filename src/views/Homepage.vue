@@ -11,7 +11,7 @@
       </v-col>
 
       <v-col cols="12" md="6" xl="4">
-        <v-card class="card-shadow h-full" height="420" v-for="homeItem in this.homeItems" v-bind:key="homeItem.key">
+        <v-card class="card-shadow h-full" height="420" v-for="homeItem in processedItem" v-bind:key="homeItem.key">
           <ItemCard :item="homeItem"></ItemCard>
         </v-card>
       </v-col>
@@ -21,7 +21,7 @@
 
 <script>
 
-import homeItems from "@/configs/menu/menuPages";
+import homeMenuItems from "@/configs/menu/menuPages";
 import ItemCard from "@/components/home/ItemCard.vue";
 import PresentationCard from "@/components/home/PresentationCard.vue";
 export default {
@@ -30,15 +30,34 @@ export default {
     PresentationCard,
     ItemCard
   },
-  data() {
-    return {
-      pageTitle: 'Homepage',
-      routerLinks: [],
-      homeItems: homeItems
+
+  computed: {
+    processedItem() {
+      const allRoutes = this.$router.options.routes;
+      return this.buildHomeItem(this.homeItems, allRoutes);
     }
   },
-  mounted() {
-    this.$emit('updatePageTitle', this.pageTitle);
+  data() {
+    return {
+      homeItems: homeMenuItems
+    }
   },
+  methods: {
+    buildHomeItem: (homeItems, allRoutes) => {
+      return homeItems.map(route => {
+        let routeName = route.routeName;
+        const routeItem = allRoutes.filter(route => route.name === routeName)[0];
+        return {
+          key: routeItem.meta.key,
+          image: routeItem.meta.image,
+          icon: routeItem.meta.icon,
+          text: routeItem.meta.text,
+          description: routeItem.meta.description,
+          path: route
+        }
+      });
+
+    }
+  }
 }
 </script>

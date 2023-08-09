@@ -13,8 +13,8 @@
     }"
   >
     <div class="d-none d-sm-block px-3">
-      <PageTitle></PageTitle>
       <BreadCrumb></BreadCrumb>
+      <PageTitle></PageTitle>
     </div>
 
     <div class="flex-fill">
@@ -27,6 +27,7 @@ import LeftSidebar  from '@/components/layout/LeftSidebar'
 import AppBar from '@/components/layout/AppBar'
 import PageTitle from "@/components/layout/PageTitle.vue";
 import BreadCrumb from "@/components/layout/BreadCrumb.vue";
+
 export default {
   name: 'PageLayout',
   components: {
@@ -34,7 +35,7 @@ export default {
     AppBar,
     PageTitle,
     BreadCrumb
-  }
+  },
 }
 </script>
 
