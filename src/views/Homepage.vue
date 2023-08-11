@@ -1,11 +1,11 @@
 <template>
 
   <PresentationCard></PresentationCard>
-  <v-spacer></v-spacer>
+  <v-spacer align="center">This product uses the AstroBin API but is not endorsed or certified by AstroBin.</v-spacer>
   <ItemCard :items="this.processedItems">
     <template v-slot="{ item, index }">
       <v-container class="text-center" :data-index="index">
-        <v-row color="red">
+        <v-row>
           <v-col cols="12" md="6">
             <v-sheet color="transparent" elevation="0">
               <v-card
@@ -26,7 +26,7 @@
               </v-card>
               <div class="text-center">
                 <v-btn size="x-large" class="text-white" color="primary" :to="item.path"
-                >Get Stack</v-btn
+                >Explore</v-btn
                 >
               </div>
             </v-sheet>

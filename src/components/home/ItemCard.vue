@@ -3,7 +3,6 @@
   <v-sheet
       elevation="0"
       class="mx-auto landing-warpper"
-      color="#F2F5F8"
       rounded
   >
     <slot

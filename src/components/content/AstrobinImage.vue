@@ -41,7 +41,7 @@
           <v-card-text>
             {{ image.description }}
           </v-card-text>
-          <v-divider></v-divider>
+
           <v-card-item>
             <div class="image__chips" v-if="0 < image.subjects.length">
               <v-chip-group>
@@ -49,8 +49,13 @@
               </v-chip-group>
             </div>
           </v-card-item>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn :to="astrobinPageUrl">Visit Astrobin page</v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
+
       <v-col cols="12" md="6" xl="4" v-if="image.urlSkyplot">
         <v-card class="card-shadow">
           <v-card-title>
@@ -112,6 +117,12 @@ export default {
       default: null,
       type: Object
     }
+  },
+  methods: {
+    astrobinPageUrl() {
+      return 'https://www.astrobin.com/' + this.image.astrobin_id + '/';
+    }
+
   }
 }
 </script>

@@ -4,7 +4,6 @@
       <v-form
         validate-on="submit"
         @submit.prevent="submitForm"
-        style="width: 100%; margin: 1em; display: flex"
       >
         <v-select
           label="Filtering by..."

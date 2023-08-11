@@ -15,8 +15,8 @@
           class="mx-auto my-10 py-0py-md-12"
       >
         <h1
-            style="color: #4a4d6d"
-            class="font-weight-black text-h3 text-lg-h2 text-xl-h1"
+          :style="{color: this.$store.state.customizedTheme.textColor }"
+          class="font-weight-black text-h3 text-lg-h2 text-xl-h1"
         >
           Welcome to astrobin API
         </h1>

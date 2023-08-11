@@ -62,7 +62,7 @@ const routes = [
             key: "menu.images",
             icon: "mdi-image-multiple",
             text: "Images",
-            description: 'Search images',
+            description: 'Search, filter and sort images from Astrobin website',
             image: backgroundImg3,
         }
     },

@@ -8,14 +8,10 @@
           variant="outlined"
           clearable
           v-model="newAstrobinId"
+          append-inner-icon="mdi-magnify"
+          @click:append-inner="updateAstrobinImage"
+          @keydown.enter="updateAstrobinImage"
       ></v-text-field>
-      <v-btn
-          class="ml-2"
-          variant="elevated"
-          color="primary"
-          @click="updateAstrobinImage"
-          height="56"
-      > GO </v-btn>
     </v-card>
     <v-spacer></v-spacer>
     <v-divider></v-divider>
