@@ -13,9 +13,6 @@
   </v-parallax>
 
   <div class="d-flex pa-5">
-    <!-- ---------------------------------------------- -->
-    <!---First Row -->
-    <!-- ---------------------------------------------- -->
     <v-row class="flex-0" dense>
       <v-col cols="12" xl="4">
         <v-card class="card-shadow">
@@ -51,7 +48,7 @@
           </v-card-item>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn :to="astrobinPageUrl">Visit Astrobin page</v-btn>
+            <v-btn @click="astrobinPageUrl">Visit Astrobin page</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -120,7 +117,8 @@ export default {
   },
   methods: {
     astrobinPageUrl() {
-      return 'https://www.astrobin.com/' + this.image.astrobin_id + '/';
+      let astrobinUrl = 'https://www.astrobin.com/' + this.image.astrobin_id + '/';
+      window.open(astrobinUrl, '_blank');
     }
 
   }

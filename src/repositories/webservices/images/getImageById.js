@@ -35,7 +35,7 @@ export const GET_IMAGE_BY_ID = async (idImage) => {
             urlThumb: response.data.url_thumb,
             urlRegular: response.data.url_regular,
             urlHd: response.data.url_hd,
-            urlHdSolution: response.data.url_solution,
+            urlHdSolution: response.data.url_solution ?? response.data.url_hd,
             // details
             urlHistogram: response.data.url_histogram,
             urlSkyplot: response.data.url_skyplot,
