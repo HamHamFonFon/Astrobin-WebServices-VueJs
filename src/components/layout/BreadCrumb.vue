@@ -7,7 +7,6 @@
       <v-icon icon="mdi-chevron-right"></v-icon>
     </template>
   </v-breadcrumbs>
-  <v-divider></v-divider>
 </template>
 
 <script>

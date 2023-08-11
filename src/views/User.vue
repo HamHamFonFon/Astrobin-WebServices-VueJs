@@ -1,44 +1,33 @@
 <template>
-  <v-container fluid>
+  <v-container class="h-full">
     <transition name="fade">
       <Message />
     </transition>
-    <transition name="fade" v-if="!isLoading">
-      <AstrobinUser v-if="!isLoading" :user="userData" />
-
+    <transition name="fade">
+      <v-card>
+        <AstrobinUser v-if="!isLoading" :user="userData" />
+        <v-spacer></v-spacer>
+        <v-divider></v-divider>
+        <div>
+          <h5 class="text-h5 mt-5">Images of {{ userData.username }} ({{ totalCount}})</h5>
+        </div>
+        <v-card>
+          <masonry-wall
+              :items="images"
+              :ssr-columns="1"
+              :padding="30"
+          >
+            <template #default="{ item, index }">
+              <div :data-index="index">{{ item.title }}</div>
+            </template>
+          </masonry-wall>
+        </v-card>
+      </v-card>
     </transition>
 
-    <masonry-wall
-      :items="listImages"
-      :min-columns="3"
-      :max-column="6"
-      :ssr-columns="1"
-      :column-width="300"
-      :gap="5"
-    >
-      <template #default="{ item, index }">
-        <v-card
-            color="grey-lighten-1"
-            :class="['ma-4']"
-            :data-index="index"
-        >
-          <v-img
-            cover
-            :src="item.image"
-          >
-            <div class="d-flex fill-height align-center justify-center">
-              <div class="text-h4 text-white">{{ item.date }}
-                <div class="text-h6 text-white">{{ item.title }}</div>
-              </div>
-            </div>
-          </v-img>
-        </v-card>
-      </template>
 
-    </masonry-wall>
+<!--    </transition>-->
   </v-container>
-
-
 </template>
 
 <script>
@@ -60,7 +49,6 @@ export default {
   },
   mounted: function () {
     this.username = this.$route.params.username ?? 'siovene';
-
     this.$store.dispatch('user/getUserByName', this.username)
   },
   computed: {
@@ -70,10 +58,10 @@ export default {
     userData () {
       return this.user.data;
     },
-    listImages() {
+    images() {
       return this.user.images;
     },
-    totalImages() {
+    totalCount() {
       return this.user.data.image_count;
     },
     isLoading() {

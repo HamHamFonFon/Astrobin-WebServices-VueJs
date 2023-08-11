@@ -1,9 +1,4 @@
 <template>
-  <!-- Navbar -->
-  <LeftSidebar />
-  <!-- Header -->
-  <AppBar />
-
   <!-- Body -->
   <v-main class="main-container"
     v-touch="{
@@ -18,16 +13,8 @@
 </template>
 
 <script>
-
-import LeftSidebar  from '@/components/layout/LeftSidebar'
-import AppBar from '@/components/layout/AppBar'
-
 export default {
   name: 'HomeLayout',
-  components: {
-    LeftSidebar,
-    AppBar
-  }
 }
 </script>
 
@@ -36,5 +23,6 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: #FFFFFF;
 }
 </style>

@@ -24,7 +24,6 @@ provide('app:layout', layout);
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-top: 60px;
 }
 
 a {

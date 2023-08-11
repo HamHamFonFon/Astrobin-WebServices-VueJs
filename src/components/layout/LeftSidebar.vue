@@ -8,6 +8,7 @@
   >
     <!-- TOP AREA -->
     <template
+      v-if="!this.$store.state.customizedTheme.miniSidebar"
       v-slot:prepend
     >
       <v-card
@@ -26,7 +27,10 @@
     <MenuSidebar :menu="navigation.menu" :allRoutes="allRoutes" />
 
     <!-- BOTTOM AREA -->
-    <template v-slot:append>
+    <template
+      v-if="!this.$store.state.customizedTheme.miniSidebar"
+      v-slot:append
+    >
       <v-card
           height="225"
           class="pa-3"

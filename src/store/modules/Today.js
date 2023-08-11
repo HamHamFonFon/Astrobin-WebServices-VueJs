@@ -50,7 +50,7 @@ const actions = {
             wsResponse.forEach(response => {
                 const wsResponseImage = ImagesWs.GET_IMAGE_BY_ID(response.astrobinImageId);
                 wsResponseImage.then(r => {
-                    commit("addTodayImage", { id: r.astrobin_id, image: r.urlRegular, date: response.date, title: r.title });
+                    commit("addTodayImage", { id: r.astrobin_id, image: r.urlRegular, date: response.date, title: r.title, user: r.user });
                 })
 
             });

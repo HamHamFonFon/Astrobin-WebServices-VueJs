@@ -1,5 +1,6 @@
 const state = () => ({
     showSideBar: true,
+    miniSidebar: false,
     mainColor: '#161B22',
     sideBarColor: '#273E4B',
     sideBarTextColor: '#D6D6D6',
@@ -10,7 +11,10 @@ const state = () => ({
 const mutations = {
   setShowSideBar: (state, payload) => {
       state.showSideBar = payload
-  }
+  },
+  setMiniSideBar(state, payload) {
+    state.miniSidebar = payload;
+  },
 };
 
 export default {

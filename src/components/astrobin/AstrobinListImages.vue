@@ -1,112 +1,47 @@
 <template>
-  <div>
-    <span>Résults: {{ totalCount }}</span>
+  <div class="image-lists" :style="{ gridTemplateColumns: getColumnStyle() }">
+    <slot
+      v-for="image in images"
+      :image="image"
+      :style="{overflow: 'hidden'}"
+    >
+    </slot>
   </div>
-  <v-spacer></v-spacer>
-  <v-container>
-
-    <div class="grid" ref="masonry">
-      <div v-for="(item, index) in images" :class="getRandomClasse()" v-bind:key="index">
-        <v-card>
-          <router-link :to="{ name: 'image', params: { astrobinId: item.astrobin_id } }">
-            <v-img
-                :src="item.urlRegular"
-                :lazy-src="item.urlGallery"
-                cover
-                class="bg-grey-lighten-2"
-            >
-              <template v-slot:placeholder>
-                <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                >
-                  <v-progress-circular
-                      indeterminate
-                      color="grey-lighten-5"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-              <v-card-title class="text-h6 text-white d-flex flex-column">
-                <p class="mt-4">{{ item.title }}</p>
-              </v-card-title>
-            </v-img>
-          </router-link>
-          <v-card-text class="pt-6">
-            <div class="font-weight-light text-grey text-h6 mb-2">
-              By <router-link :to="{name: 'user', params: { username : item.user }}">{{ item.user }}</router-link>
-            </div>
-          </v-card-text>
-        </v-card>
-      </div>
-    </div>
-  </v-container>
 </template>
 
 <script>
-import Masonry from 'masonry-layout'
-const ITEM_CLASSES = ['grid-item--width2', 'grid-item--width3', 'grid-item--width4'];
 
 export default {
   name: "AstrobinListImages",
   props: {
     images: Object,
-    totalCount: Number
-  },
-  created() {
-    this.layout()
-  },
-  updated() {
-    this.layout()
+    gap: Number,
+    columns: {
+      type: Number,
+      default: 3
+    }
   },
   methods: {
-    layout() {
-      this._masonry = new Masonry(this.$refs.masonry, {
-        itemSelector: '.grid-item',
-        columnWidth: 160,
-        percentPosition: true,
-      })
-    },
-    getRandomClasse() {
-      const randomInt = (min = 1, max = ITEM_CLASSES.length) => Math.floor(Math.random() * (max - min) + min)
-      return 'grid-item ' + ITEM_CLASSES[randomInt()];
+    getColumnStyle() {
+      return `repeat(${this.columns}, 1fr)`;
     }
   }
 }
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
+:root {
+  counter-reset: masonry;
 }
-.grid {
-  /*background: #eee;*/
-  /*max-width: 100%;*/
-}
-.grid-item {
-  width: 160px;
-  float: left;
-  border: 1px solid #a1a1a1;
-  margin: 0.1em;
+.images-list {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  grid-auto-rows: 0;
 }
 
-.grid-item--width2 {
-  width: 240px;
+.image-item {
+  border-radius: 5px;
+  overflow: hidden;
 }
-.grid-item--width3 {
-  width: 320px;
-}
-.grid-item--width4 {
-  width: 480px;
-}
-
-/*.grid-item--height2 {*/
-/*  height: 200px;*/
-/*}*/
-/*.grid-item--height3 {*/
-/*  height: 260px;*/
-/*}*/
-/*.grid-item--height4 {*/
-/*  height: 360px;*/
-/*}*/
 </style>

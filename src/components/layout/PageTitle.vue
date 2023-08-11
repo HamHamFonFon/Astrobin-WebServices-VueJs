@@ -1,6 +1,6 @@
 <template>
   <h1 class="text-h5 mt-5">{{ title }}</h1>
-  <h3 class="text-h6 mt-8" v-if="description">{{ description }}</h3>
+<!--  <h3 class="text-h6 mt-8" v-if="description">{{ description }}</h3>-->
 </template>
 
 <script>

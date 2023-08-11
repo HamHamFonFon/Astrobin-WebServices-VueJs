@@ -62,6 +62,7 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
                     user: image.user,
                     urlHistogram: image.url_histogram,
                     urlSkyplot: image.url_skyplot,
+                    urlSkyplotAdvanced: image.url_advanced_skyplot_small,
                     views: image.views,
                     likes: image.likes
                 }

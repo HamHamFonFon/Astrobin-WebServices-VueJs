@@ -1,10 +1,23 @@
 <template>
-  <v-container>
-    <div class="msgInformation">
-      <v-text-field label="AstrobinId" placeholder="Change astrobinId" class="pt-5 mr-2" variant="outlined" clearable v-model="newAstrobinId"></v-text-field>
-      <v-btn x-large variant="outlined" @click="updateAstrobinImage"> CHANGE </v-btn>
-    </div>
-
+  <v-container class="h-full">
+    <v-card class="d-flex pt-4 px-4 mb-3">
+      <v-text-field
+          type="search"
+          label="AstrobinId"
+          placeholder="Change astrobin image Id"
+          variant="outlined"
+          clearable
+          v-model="newAstrobinId"
+      ></v-text-field>
+      <v-btn
+          class="ml-2"
+          variant="elevated"
+          color="primary"
+          @click="updateAstrobinImage"
+          height="56"
+      > GO </v-btn>
+    </v-card>
+    <v-spacer></v-spacer>
     <v-divider></v-divider>
 
     <transition name="fade">

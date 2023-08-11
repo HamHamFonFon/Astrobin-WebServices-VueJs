@@ -1,87 +1,88 @@
 <template>
-  <article>
-    <v-card
-      class="mx-auto"
-    >
-      <v-card-item>
-        <v-container>
-          <v-row no-gutters>
-            <v-col cols="9">
-              <v-img
-                :title="image.title"
-                :src="image.urlHd"
-                class="align-start text-white"
-                cover
-              >
-                <v-toolbar
-                  color="rgba(0, 0, 0, 0)"
-                  theme="dark"
-                >
-                  <v-toolbar-title class="text-h4">
-                    {{ image.title }}
-                  </v-toolbar-title>
-                </v-toolbar>
-              </v-img>
-            </v-col>
-            <v-col cols="3">
-              <v-container>
-                <v-row no-gutters v-if="image.urlSkyplot">
-                  <v-col>
-                    <h3>Skyplot</h3>
-                    <v-img :src="image.urlSkyplot"></v-img>
-                  </v-col>
-                </v-row>
-                <v-row no-gutters v-if="image.urlHistogram">
-                  <v-col>
-                    <h3>Histogram</h3>
-                    <v-img :src="image.urlHistogram"></v-img>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-col>
-          </v-row>
-        </v-container>
-        <v-card-subtitle>{{ image.description }}</v-card-subtitle>
-        <v-card-actions>
-          <v-btn
-              color="orange-lighten-2"
-              variant="text"
-              @click="show = !show"
+
+  <v-parallax
+    :src="isHovering ? image.urlHdSolution : image.urlHd"
+    @mouseover="isHovering = true" @mouseout="isHovering = false"
+    cover
+  >
+    <v-row class="w-auto fill-height" align="center" justify="center">
+      <div class="text-h2 text-white">
+        <div class="text-h4 text-white">{{ image.title }}</div>
+      </div>
+    </v-row>
+  </v-parallax>
+
+  <div class="d-flex pa-5">
+    <!-- ---------------------------------------------- -->
+    <!---First Row -->
+    <!-- ---------------------------------------------- -->
+    <v-row class="flex-0" dense>
+      <v-col cols="12" xl="4">
+        <v-card class="card-shadow">
+          <v-card-title>
+            <v-icon icon="mdi-information-outline" class="mr-2" left></v-icon>
+            Informations
+          </v-card-title>
+          <v-list-item
+              v-for="(item, i) in listItems"
+              :key="i"
+              :value="item"
+              color="primary"
           >
-            More
-          </v-btn>
-          <v-spacer></v-spacer>
-        </v-card-actions>
-        <v-expand-transition>
-          <div v-show="show">
-            <v-list-item
-                v-for="(item, i) in listItems"
-                :key="i"
-                :value="item"
-                color="primary"
-            >
-              <template v-slot:prepend>
-                <v-icon :icon="item.icon"></v-icon>
-              </template>
+            <template v-slot:prepend>
+              <v-icon :icon="item.icon"></v-icon>
+            </template>
 
-              <v-list-item-title>
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item>
+            <v-list-item-title justify>
+              {{ item.text }}
+            </v-list-item-title>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-card-text>
+            {{ image.description }}
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-item>
+            <div class="image__chips" v-if="0 < image.subjects.length">
+              <v-chip-group>
+                <v-chip v-for="chip in image.subjects" :key="chip">{{ chip }}</v-chip>
+              </v-chip-group>
+            </div>
+          </v-card-item>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" xl="4" v-if="image.urlSkyplot">
+        <v-card class="card-shadow">
+          <v-card-title>
+            <v-icon icon="mdi-telescope" class="mr-2" left></v-icon>
+            Skyplot
+          </v-card-title>
+          <v-img :src="image.urlSkyplotAdvanced ? image.urlSkyplotAdvanced : image.urlSkyplot" cover></v-img>
+          <v-list-item
+              v-for="(item, i) in acquisition"
+              :key="i"
+              :value="item"
+              color="primary"
+          >
+            <v-list-item-title justify>
+              {{ item.key }}
+            </v-list-item-title>
+            <v-list-item-subtitle>{{ item.text }}</v-list-item-subtitle>
+          </v-list-item>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" xl="4" v-if="image.urlHistogram">
+        <v-card class="card-shadow h-full" height="420">
+          <v-card-title>
+            <v-icon icon="mdi-chart-line" class="mr-2" left></v-icon>
+            Histogram
+          </v-card-title>
+          <v-img :src="image.urlHistogram" cover></v-img>
 
-          </div>
-        </v-expand-transition>
-
-        <v-divider></v-divider>
-        <v-card-title v-if="0 < image.subjects.length">Subjects</v-card-title>
-        <div class="image__chips" v-if="0 < image.subjects.length">
-          <v-chip-group>
-            <v-chip v-for="chip in image.subjects" :key="chip">{{ chip }}</v-chip>
-          </v-chip-group>
-        </div>
-      </v-card-item>
-    </v-card>
-  </article>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -90,11 +91,19 @@ export default {
   data () {
     return {
       show: false,
+      isHovering: false,
       listItems: [
         { text: this.image.user, icon: 'mdi-account', link: true},
         { text: this.image.likes, icon: 'mdi-heart'},
         { text: this.image.views, icon: 'mdi-eye'},
         { text: this.image.uploaded, icon: 'mdi-clock'},
+      ],
+      acquisition: [
+        { text: this.image.ra, key: 'RA'},
+        { text: this.image.dec, key: 'Dec'},
+        { text: this.image.scale, key: 'Pixel scale'},
+        { text: this.image.orientation, key: 'Orientation'},
+        { text: this.image.radius, key: 'Field radius'},
       ]
     }
   },
@@ -103,7 +112,6 @@ export default {
       default: null,
       type: Object
     }
-  },
-
+  }
 }
 </script>

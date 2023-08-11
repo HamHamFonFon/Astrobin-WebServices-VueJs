@@ -13,8 +13,8 @@
     }"
   >
     <div class="d-none d-sm-block px-3">
-      <BreadCrumb></BreadCrumb>
       <PageTitle></PageTitle>
+      <BreadCrumb></BreadCrumb>
     </div>
 
     <div class="flex-fill">
@@ -41,7 +41,7 @@ export default {
 
 <style>
 .main-container {
-  height: 100%;
+  background: #EEEEEE;
   display: flex;
   flex-direction: column;
 }

@@ -22,19 +22,30 @@ export const GET_IMAGE_BY_ID = async (idImage) => {
         return {
             id: response.data.id,
             astrobin_id: response.data.hash,
+            // DATA
             title: response.data.title,
             subjects: response.data.subjects,
             description: response.data.description,
+            user: response.data.user,
+            views: response.data.views,
+            likes: response.data.likes,
+            // URL
             uploaded: response.data.uploaded,
             urlGallery: response.data.url_gallery,
             urlThumb: response.data.url_thumb,
             urlRegular: response.data.url_regular,
             urlHd: response.data.url_hd,
-            user: response.data.user,
+            urlHdSolution: response.data.url_solution,
+            // details
             urlHistogram: response.data.url_histogram,
             urlSkyplot: response.data.url_skyplot,
-            views: response.data.views,
-            likes: response.data.likes
+            urlSkyplotAdvanced: response.data.url_advanced_skyplot_small,
+            ra: response.data.ra,
+            dec: response.data.dec,
+            scale: response.data.pixscale,
+            radius: response.data.radius,
+            orientation: response.data.orientation
+
         }
     } catch (err) {
         const error = new Error(err.message);

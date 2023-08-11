@@ -1,59 +1,89 @@
 <template>
-  <div class="pa-5">
-    <!-- First Item -->
-    <v-row  class="flex-0" dense>
-      <v-col cols="12" xl="4">
-        <v-card cols="12" xl="6">
-          <v-card class="card-shadow" height="420">
-            <PresentationCard></PresentationCard>
-          </v-card>
-        </v-card>
-      </v-col>
 
-      <v-col cols="12" md="6" xl="4">
-        <v-card class="card-shadow h-full" height="420" v-for="homeItem in processedItem" v-bind:key="homeItem.key">
-          <ItemCard :item="homeItem"></ItemCard>
-        </v-card>
-      </v-col>
-    </v-row>
-  </div>
+  <PresentationCard></PresentationCard>
+  <v-spacer></v-spacer>
+  <ItemCard :items="this.processedItems">
+    <template v-slot="{ item, index }">
+      <v-container class="text-center" :data-index="index">
+        <v-row color="red">
+          <v-col cols="12" md="6">
+            <v-sheet color="transparent" elevation="0">
+              <v-card
+                  color="transparent"
+                  elevation="0"
+                  max-width="800"
+                  class="mx-auto my-10"
+              >
+                <h1
+                  style="color: #4a4d6d"
+                  class="font-weight-black text-h3 text-lg-h2 text-xl-h1"
+                >
+                  {{ item.text }}
+                </h1>
+                <h2 class="text-h6 text-secondary mt-4 mx-auto">
+                  {{ item.description }}
+                </h2>
+              </v-card>
+              <div class="text-center">
+                <v-btn size="x-large" class="text-white" color="primary" :to="item.path"
+                >Get Stack</v-btn
+                >
+              </div>
+            </v-sheet>
+          </v-col>
+          <v-col cols="0" md="6">
+            <v-card>
+              <router-link :to="item.path">
+                <v-img
+                    height="420"
+                    cover
+                    :src="item.image"
+                ></v-img>
+              </router-link>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </template>
+  </ItemCard>
 </template>
 
 <script>
 
-import homeMenuItems from "@/configs/menu/menuPages";
-import ItemCard from "@/components/home/ItemCard.vue";
+import menuPages from "@/configs/menu/menuPages";
 import PresentationCard from "@/components/home/PresentationCard.vue";
+import ItemCard from "@/components/home/ItemCard.vue";
+
 export default {
   name: "HomePage",
   components: {
     PresentationCard,
     ItemCard
   },
-
-  computed: {
-    processedItem() {
-      const allRoutes = this.$router.options.routes;
-      return this.buildHomeItem(this.homeItems, allRoutes);
-    }
-  },
   data() {
     return {
-      homeItems: homeMenuItems
+      menuPages: menuPages
+    }
+  },
+  computed: {
+    processedItems() {
+      const allRoutes = this.$router.options.routes;
+      return this.buildHomeItem(this.menuPages, allRoutes);
     }
   },
   methods: {
-    buildHomeItem: (homeItems, allRoutes) => {
-      return homeItems.map(route => {
+    buildHomeItem: (routesHome, allRoutes) => {
+      return routesHome.map(route => {
         let routeName = route.routeName;
         const routeItem = allRoutes.filter(route => route.name === routeName)[0];
+        let path = (routeItem.meta.defaultParamValue) ? { name: routeName, params: { 'username': routeItem.meta.defaultParamValue } } : routeItem.path;
         return {
           key: routeItem.meta.key,
           image: routeItem.meta.image,
           icon: routeItem.meta.icon,
           text: routeItem.meta.text,
           description: routeItem.meta.description,
-          path: route
+          path: path,
         }
       });
 
