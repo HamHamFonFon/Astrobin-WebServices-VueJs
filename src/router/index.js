@@ -9,6 +9,7 @@ import backgroundImg1 from '@/assets/images/bg-1.jpg'
 import backgroundImg2 from '@/assets/images/bg-2.jpg'
 import backgroundImg3 from '@/assets/images/bg-3.jpg'
 import backgroundImg4 from '@/assets/images/bg-5.jpg'
+import NotFound from "@/views/NotFound.vue";
 
 const routes = [
     {
@@ -89,6 +90,13 @@ const routes = [
             layout: 'page',
             text: 'Image',
             description: null
+        }
+    },
+    {
+        path: '/:notFound',
+        component: NotFound,
+        meta: {
+            layout: 'default'
         }
     }
 ];

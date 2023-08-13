@@ -46,10 +46,10 @@
           ></v-select>
         </v-card>
 
-        <AstrobinListImages :images="sortedImages" :columns="5" :gap="0">
+        <AstrobinListImages :images="sortedImages" :columns="4" :gap="0">
           <template v-slot="{ image, index }">
             <v-col :data-index="index">
-              <v-card class="mx-auto" max-height="350" max-width="300">
+              <v-card class="mx-auto" max-height="450" max-width="400">
                 <router-link :to="{ name: 'image', params: { astrobinId: image.astrobin_id } }">
                   <v-img
                       :src="image.urlRegular"
@@ -72,11 +72,23 @@
                     </template>
                     <v-card-title class="text-h6 text-white">{{ image.title }}</v-card-title>
                   </v-img>
-                  <v-card-text class="pt-4">
-                    <router-link :to="{name: 'user', params: { username : image.user }}">
-                      <v-icon icon="mdi-account" />{{ image.user }}
-                    </router-link>
-                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-list-item class="w-100">
+                      <template v-slot:prepend>
+                        <router-link :to="{name: 'user', params: { username : image.user }}">
+                          <v-icon color="surface-variant" icon="mdi-account" />{{ image.user }}
+                        </router-link>
+                      </template>
+                      <template v-slot:append>
+                        <div class="justify-self-end">
+                          <v-icon icon="mdi-eye" color="surface-variant"></v-icon> <span class="subheading me-2">{{ image.views }}</span>
+                          <v-icon icon="mdi-heart" color="surface-variant"></v-icon> <span class="subheading me-2">{{ image.likes }}</span>
+                        </div>
+                      </template>
+                    </v-list-item>
+
+                  </v-card-actions>
                 </router-link>
               </v-card>
             </v-col>
