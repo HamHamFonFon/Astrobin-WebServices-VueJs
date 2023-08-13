@@ -21,7 +21,7 @@ export const GET_IMAGE_BY_ID = async (idImage) => {
 
         return {
             id: response.data.id,
-            astrobin_id: response.data.hash,
+            astrobin_id: response.data.hash  ??  response.data.id,
             // DATA
             title: response.data.title,
             subjects: response.data.subjects,

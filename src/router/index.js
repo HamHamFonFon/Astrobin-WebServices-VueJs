@@ -52,6 +52,7 @@ const routes = [
             text: "Top-picks",
             description: '',
             image: backgroundImg2,
+            disabled: true
         }
     },
     {

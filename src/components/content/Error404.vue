@@ -4,7 +4,7 @@
           color="transparent"
           elevation="0"
           max-width="800"
-          class="mx-auto my-10 py-0py-md-12"
+          class="mx-auto"
       >
         <h1
             class="font-weight-black text-h3 text-lg-h2 text-xl-h1 text-secondary"
@@ -17,7 +17,7 @@
         <v-spacer></v-spacer>
         <v-card-actions class="justify-center">
           <router-link to="/">
-            <v-btn  aria-label="Home" size="large" variant="outlined" class="text-secondary justify-center">Home</v-btn>
+            <v-btn  aria-label="Home" size="large" variant="outlined" class="text-secondary justify-center"> Home </v-btn>
           </router-link>
         </v-card-actions>
       </v-card>

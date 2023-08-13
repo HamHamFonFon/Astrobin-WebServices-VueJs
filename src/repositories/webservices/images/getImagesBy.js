@@ -50,7 +50,7 @@ export const GET_IMAGES_BY = async (params, offset, limit) => {
             listImages: response.data.objects.map(image => {
                 return {
                     id: image.id,
-                    astrobin_id: image.hash,
+                    astrobin_id: image.hash ?? image.id,
                     title: image.title,
                     subjects: image.subjects,
                     description: image.description,
