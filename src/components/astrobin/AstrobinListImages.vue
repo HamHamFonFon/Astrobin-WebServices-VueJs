@@ -1,12 +1,11 @@
 <template>
-  <div class="image-lists" :style="{ gridTemplateColumns: getColumnStyle() }">
+  <v-row class="grid" :style="{ gridTemplateColumns: this.getColumnStyle() }">
     <slot
       v-for="image in images"
       :image="image"
-      :style="{overflow: 'hidden'}"
     >
     </slot>
-  </div>
+  </v-row>
 </template>
 
 <script>
@@ -18,7 +17,7 @@ export default {
     gap: Number,
     columns: {
       type: Number,
-      default: 3
+      default: 4
     }
   },
   methods: {
@@ -33,11 +32,8 @@ export default {
 :root {
   counter-reset: masonry;
 }
-.images-list {
+.grid {
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-  grid-auto-rows: 0;
 }
 
 .image-item {

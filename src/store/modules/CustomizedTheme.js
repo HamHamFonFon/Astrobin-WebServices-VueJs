@@ -1,5 +1,5 @@
 const state = () => ({
-    showSideBar: true,
+    showSideBar: false,
     miniSidebar: false,
     mainColor: '#161B22',
     sideBarColor: '#273E4B',

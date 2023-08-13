@@ -1,9 +1,7 @@
 import { UserWs } from '@/repositories/webservices/user'
-import { ImagesWs } from '@/repositories/webservices/images'
 const initialState = () => {
     return {
         data: {},
-        images: []
     }
 }
 
@@ -19,13 +17,13 @@ const actions = {
         try {
             const wsResponse = await UserWs.GET_USER_BY_NAME(userName);
             commit('setUser', wsResponse);
-            if (wsResponse.username && 0 < wsResponse.image_count) {
-                commit('resetListImages');
-                const wsResponseImages = ImagesWs.GET_IMAGES_BY({'user': wsResponse.username}, 0, 20 );
-                wsResponseImages.then(r => {
-                    r.listImages.forEach(img => commit('addUserImage', img))
-                });
-            }
+            // if (wsResponse.username && 0 < wsResponse.image_count) {
+            //     commit('resetListImages');
+            //     const wsResponseImages = ImagesWs.GET_IMAGES_BY({'user': wsResponse.username}, 0, 20 );
+            //     wsResponseImages.then(r => {
+            //         r.listImages.forEach(img => commit('addUserImage', img))
+            //     });
+            // }
 
             commit('message/setType', 'success', { root: true });
             commit('message/setMessage', 'User and images loaded', { root: true })

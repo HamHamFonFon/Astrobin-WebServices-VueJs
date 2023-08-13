@@ -1,85 +1,85 @@
 <template>
-  <v-container>
-    <v-card class="d-flex pt-4 px-4 mb-3">
+  <v-container class="h-full">
+    <v-card class="pt-4 px-4 mb-3">
       <v-form
-        validate-on="submit"
-        @submit.prevent="submitForm"
+          validate-on="submit"
+          @submit.prevent="submitForm"
       >
         <v-select
-          label="Filtering by..."
-          v-model="formData.type"
-          :items="items"
-          item-value="key"
-          item-title="value"
-          variant="outlined"
-          required
-          clearable
-        ></v-select>
-
-        <v-text-field
-          type="search"
-          label="Search terms"
-          v-model="formData.term"
-          variant="outlined"
-          required
-          clearable
-        >
-        </v-text-field>
-
-        <v-btn type="submit" x-large variant="outlined"> Search </v-btn>
-        <v-select
-            v-model="selectedSort"
-            :disabled="0 === totalCount"
-            label="Sort by..."
-            :items="sortResults"
+            label="Filtering by..."
+            v-model="formData.type"
+            :items="items"
             item-value="key"
             item-title="value"
             variant="outlined"
-            @change="sortImages"
+            required
             clearable
         ></v-select>
+        <v-text-field
+            type="search"
+            label="Search terms"
+            v-model="formData.term"
+            variant="outlined"
+            required
+            clearable
+        >
+        </v-text-field>
+        <v-btn type="submit" class="ml-2" variant="elevated"> Search </v-btn>
       </v-form>
     </v-card>
 
-    <v-spacer></v-spacer>
-
     <transition name="fade">
-      <v-card class="d-flex pt-4 px-4 mb-3" v-if="!isLoading && 0 < totalCount">
+      <div v-if="!isLoading && 0 < totalCount">
+        <v-card class="d-flex pt-4 px-4 mb-3" >
+          <h5 v-if="totalCount" class="text-h6 mt-5">Results: {{ totalCount }} images</h5>
+          <v-spacer></v-spacer>
+          <v-select
+              v-model="selectedSort"
+              :disabled="0 === totalCount"
+              label="Sort by..."
+              :items="sortResults"
+              item-value="key"
+              item-title="value"
+              variant="outlined"
+              @change="sortImages"
+              clearable
+          ></v-select>
+        </v-card>
 
-        <div v-if="totalCount">
-          <h5 class="text-h5 mt-5">{{ totalCount }} images</h5>
-        </div>
-        <v-spacer></v-spacer>
-
-        <AstrobinListImages :images="sortedImages" :columns="3" :gap="0">
+        <AstrobinListImages :images="sortedImages" :columns="5" :gap="0">
           <template v-slot="{ image, index }">
-            <v-card class="ma-3" :data-index="index">
-              <router-link :to="{ name: 'image', params: { astrobinId: image.astrobin_id } }">
-                <v-img
-                    :src="image.urlRegular"
-                    :lazy-src="image.urlGallery"
-                    cover
-                    class="bg-grey-lighten-2"
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                    >
-                      <v-progress-circular
-                          indeterminate
-                          color="grey-lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                  <v-card-title class="text-h6 text-white">{{ image.title }}</v-card-title>
-                </v-img>
-                <v-card-subtitle class="pt-4">
-                  <router-link :to="{name: 'user', params: { username : image.user }}">{{ image.user }}</router-link> -  {{ image.date }}
-                </v-card-subtitle>
-              </router-link>
-            </v-card>
+            <v-col :data-index="index">
+              <v-card class="mx-auto" max-height="350" max-width="300">
+                <router-link :to="{ name: 'image', params: { astrobinId: image.astrobin_id } }">
+                  <v-img
+                      :src="image.urlRegular"
+                      :lazy-src="image.urlGallery"
+                      class="bg-grey-lighten-2"
+                      height="300"
+                      cover
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                      >
+                        <v-progress-circular
+                            indeterminate
+                            color="grey-lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                    <v-card-title class="text-h6 text-white">{{ image.title }}</v-card-title>
+                  </v-img>
+                  <v-card-text class="pt-4">
+                    <router-link :to="{name: 'user', params: { username : image.user }}">
+                      <v-icon icon="mdi-account" />{{ image.user }}
+                    </router-link>
+                  </v-card-text>
+                </router-link>
+              </v-card>
+            </v-col>
           </template>
         </AstrobinListImages>
 
@@ -92,7 +92,7 @@
               @click="moreItems"
           > <span>Show more</span> </v-btn>
         </v-row>
-      </v-card>
+      </div>
     </transition>
 
     <transition name="fade">
@@ -107,6 +107,8 @@ import {mapGetters, mapState} from "vuex";
 
 import Message from "@/components/layout/Message.vue";
 import AstrobinListImages from "@/components/astrobin/AstrobinListImages.vue";
+
+import sortingResults from "@/configs/sortingResults";
 
 export default {
   name: "ListImages",
@@ -130,13 +132,7 @@ export default {
         {key: 'description__icontains', value: 'Description contains...'},
         {key: 'subjects', value: 'Subjects'},
       ],
-      sortResults: [
-        {key: 'likes', value: 'Most liked'},
-        {key: 'views', value: 'Most viewed'},
-        {key: 'uploaded_most', value: 'Most recent'},
-        {key: 'uploaded_old', value: 'Less recent'},
-        {key: 'title', value: 'Title'}
-      ],
+      sortResults: sortingResults,
       formData: {
         type: '',
         term: ''
@@ -182,4 +178,11 @@ export default {
 </script>
 
 <style scoped>
+.v-card-title {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
 </style>

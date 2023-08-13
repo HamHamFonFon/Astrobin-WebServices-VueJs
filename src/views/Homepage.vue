@@ -25,9 +25,7 @@
                 </h2>
               </v-card>
               <div class="text-center">
-                <v-btn size="x-large" class="text-white" color="primary" :to="item.path"
-                >Explore</v-btn
-                >
+                <v-btn size="x-large" class="text-white" color="primary" :to="item.path">Explore</v-btn>
               </div>
             </v-sheet>
           </v-col>
