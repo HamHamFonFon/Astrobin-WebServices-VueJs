@@ -1,5 +1,4 @@
 <template>
-
   <v-parallax
     :src="isHovering ? image.urlHdSolution : image.urlHd"
     @mouseover="isHovering = true" @mouseout="isHovering = false"

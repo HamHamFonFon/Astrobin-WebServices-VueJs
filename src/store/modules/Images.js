@@ -58,6 +58,7 @@ const actions = {
     async fetchImageById({ commit }, id) {
         /**
          * @todo how to use action in Message Store ?
+         * @todo bis: api call doesn't run if id is only number (old id)
          */
         commit('message/setLoading', true, { root: true });
         commit('message/setType', 'warning', { root: true });

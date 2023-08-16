@@ -2,6 +2,7 @@
 
   <PresentationCard></PresentationCard>
   <v-spacer align="center">This product uses the AstroBin API but is not endorsed or certified by AstroBin.</v-spacer>
+  <a id="pages"></a>
   <ItemCard :items="this.processedItems">
     <template v-slot="{ item, index }">
       <v-container class="text-center" :data-index="index">

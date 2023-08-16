@@ -23,23 +23,32 @@
 
     <transition name="fade">
       <div v-if="!isLoading ">
-        <AstrobinUser :user="userData" />
 
-        <div>
-          <h5 v-if="totalCount" class="text-h5 mt-5">Images of {{ userData.username }} ({{ totalCount}})</h5>
-          <v-spacer></v-spacer>
-          <v-select
-              v-model="selectedSort"
-              :disabled="0 === totalCount"
-              label="Sort by..."
-              :items="sortResults"
-              item-value="key"
-              item-title="value"
-              variant="outlined"
-              @change="sortImages"
-              clearable
-          ></v-select>
+        <div class="d-flex pa-5">
+          <v-row class="flex-0" dense>
+            <v-col cols="12" xl="4">
+              <AstrobinUser :user="userData" />
+            </v-col>
+            <v-col cols="12" xl="8">
+              <v-card class="pt-4 px-4 mb-3 card-shadow">
+                <h5 v-if="totalCount" class="text-h5 mt-5">Images of {{ userData.username }} ({{ totalCount}})</h5>
+                <v-spacer></v-spacer>
+                <v-select
+                    v-model="selectedSort"
+                    :disabled="0 === totalCount"
+                    label="Sort by..."
+                    :items="sortResults"
+                    item-value="key"
+                    item-title="value"
+                    variant="outlined"
+                    @change="sortImages"
+                    clearable
+                ></v-select>
+              </v-card>
+            </v-col>
+          </v-row>
         </div>
+
 
         <AstrobinListImages  v-if="0 < totalCount" :images="sortedImages" :columns="4" :gap="0">
           <template v-slot="{ image, index }">
@@ -90,14 +99,10 @@
             primary
             v-if="totalCount > countItems"
             @click="moreItems"
-            disabled="disabled"
           > <span>Show more</span> </v-btn>
         </v-row>
       </div>
     </transition>
-
-
-<!--    </transition>-->
   </v-container>
 </template>
 
@@ -129,6 +134,7 @@ export default {
     this.$store.commit('images/setTotalCount', 0);
   },
   mounted: function () {
+    this.offset = 20;
     this.username = this.$route.params.username ?? 'siovene';
     this.$store.dispatch('user/getUserByName', this.username)
     this.$store.dispatch('images/fetchImages', { formData: {type: 'user', term: this.username}, offset: 0, limit: 20 })
@@ -145,6 +151,9 @@ export default {
     },
     totalCount() {
       return this.images.totalCount;
+    },
+    currentOffset() {
+      return this.images.offset;
     },
     countItems() {
       return this.images.images.length;
@@ -171,8 +180,8 @@ export default {
     /**
      * More items
      */
-    moreItems() {
-
+    async moreItems() {
+      this.$store.dispatch('images/fetchImages', { formData: {type: 'user', term: this.username}, offset: (this.currentOffset+20), limit: 20 });
     }
   },
   watch: {
