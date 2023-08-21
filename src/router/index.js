@@ -1,15 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomePage from "@/views/Homepage.vue";
-import PageToday from '@/views/Today.vue'
-import ListImages from '@/views/ListImages.vue'
 import PageImage from '@/views/Image.vue'
 import PageUser from '@/views/User.vue'
 import backgroundImg1 from '@/assets/images/bg-1.jpg'
 import backgroundImg2 from '@/assets/images/bg-2.jpg'
 import backgroundImg3 from '@/assets/images/bg-3.jpg'
 import backgroundImg4 from '@/assets/images/bg-5.jpg'
-import NotFound from "@/views/NotFound.vue";
 
 const routes = [
     {
@@ -20,7 +16,7 @@ const routes = [
     {
         path: '/home',
         name: 'home',
-        component: HomePage,
+        component: () => import('@/views/Homepage.vue'), //HomePage,
         meta: {
             layout: 'home',
             key: "menu.home",
@@ -29,9 +25,22 @@ const routes = [
         }
     },
     {
+        path: '/images',
+        name: 'images',
+        component: () => import('@/views/ListImages.vue'), //ListImages,
+        meta: {
+            layout: 'page',
+            key: "menu.images",
+            icon: "mdi-image-multiple",
+            text: "Images",
+            description: 'Search, filter and sort images from Astrobin website',
+            image: backgroundImg3,
+        }
+    },
+    {
         path: '/image-of-the-day',
         name: 'today',
-        component: PageToday,
+        component: () => import('@/views/Today.vue'), // PageToday,
         meta: {
             layout: 'page',
             key: "menu.today",
@@ -53,19 +62,6 @@ const routes = [
             description: '',
             image: backgroundImg2,
             disabled: true
-        }
-    },
-    {
-        path: '/images',
-        name: 'images',
-        component: ListImages,
-        meta: {
-            layout: 'page',
-            key: "menu.images",
-            icon: "mdi-image-multiple",
-            text: "Images",
-            description: 'Search, filter and sort images from Astrobin website',
-            image: backgroundImg3,
         }
     },
     {
@@ -95,7 +91,7 @@ const routes = [
     },
     {
         path: '/:notFound',
-        component: NotFound,
+        component: () => import('@/views/NotFound.vue'),
         meta: {
             layout: 'default'
         }

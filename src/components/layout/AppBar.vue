@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     density="default"
-    :color="this.$store.state.customizedTheme.appBarColor"
+    color="appBarColor"
   >
     <div class="px-2 d-flex align-center justify-space-between w-100">
       <v-app-bar-nav-icon
@@ -9,7 +9,7 @@
       >
       </v-app-bar-nav-icon>
       <v-app-bar-title
-        :color="this.$store.state.customizedTheme.textColor"
+        color="greytext"
       >
         <span>Astrobin API</span>
         <v-divider vertical thickness="2" color="black" class="ml-5 mr-1"></v-divider>

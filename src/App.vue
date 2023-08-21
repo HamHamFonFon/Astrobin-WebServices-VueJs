@@ -1,5 +1,5 @@
 <template>
-  <v-app theme="light">
+  <v-app>
     <component :is="layout">
       <router-view></router-view>
     </component>

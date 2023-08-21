@@ -6,7 +6,7 @@
     rounded
     :style="backgroundStyle"
   >
-    <v-container class="text-center">
+    <v-container class="text-center" :style="{margin: 'auto'}">
       <v-sheet color="transparent" elevation="0">
         <img class="mx-auto" width="200" src="@/assets/images/astro_otter_200-200.png" alt="Astro-Otter logo" style="border-radius: 50%" />
         <v-card
@@ -26,13 +26,12 @@
           </h2>
         </v-card>
         <div class="text-center mb-10">
-          <v-btn
+            <v-btn
               size="x-large"
               class="text-white"
               :color="this.$store.state.customizedTheme.sideBarColor"
-              to="/home#pages"
-          >Explore</v-btn
-          >
+              @click="scrollToCards"
+            >Explore</v-btn>
         </div>
       </v-sheet>
     </v-container>
@@ -47,12 +46,20 @@ export default {
   name: "PresentationCard",
   setup() {
     const backgroundStyle = computed(() => ({
-      backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', height: '100vh'
+      backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', height: '100vh', display: 'flex'
     }));
 
     return {
       backgroundStyle
     };
+  },
+  methods: {
+    scrollToCards() {
+      const homeCards = document.getElementById('pages');
+      if (homeCards) {
+        homeCards.scrollIntoView({ behavior: "smooth" })
+      }
+    }
   }
 }
 </script>

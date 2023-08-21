@@ -2,15 +2,18 @@
 
   <PresentationCard></PresentationCard>
   <v-spacer align="center">This product uses the AstroBin API but is not endorsed or certified by AstroBin.</v-spacer>
-  <a id="pages"></a>
+  <a ref="pages" id="pages"></a>
   <ItemCard :items="this.processedItems">
     <template v-slot="{ item, index }">
+      <v-toolbar height="30">
+        <v-toolbar-title class="text-h6 font-weight-bold">
+        </v-toolbar-title>
+      </v-toolbar>
       <v-container class="text-center" :data-index="index">
         <v-row>
           <v-col cols="12" md="6">
-            <v-sheet color="transparent" elevation="0">
+            <v-sheet elevation="0">
               <v-card
-                  color="transparent"
                   elevation="0"
                   max-width="800"
                   class="mx-auto my-10"
@@ -26,7 +29,8 @@
                 </h2>
               </v-card>
               <div class="text-center">
-                <v-btn size="x-large" class="text-white" :color="this.$store.state.customizedTheme.sideBarColor" :to="item.path">Explore</v-btn>
+                <v-btn size="x-large" class="text-white" color="secondary" :to="item.path">Explore</v-btn>
+<!--                :color="this.$store.state.customizedTheme.sideBarColor"-->
               </div>
             </v-sheet>
           </v-col>

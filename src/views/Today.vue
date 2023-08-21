@@ -1,16 +1,15 @@
 <template>
-  <v-container class="h-full">
-    <transition name="fade">
-      <Message />
-    </transition>
+  <v-sheet
+      elevation="0"
+      class="mx-auto"
+    >
+    <transition name="fade"><Message /></transition>
     <transition name="fade">
       <v-card>
         <AstrobinToday v-if="!isLoading" :today="today" :items="sortedTodayImage"></AstrobinToday>
       </v-card>
     </transition>
-
-
-  </v-container>
+  </v-sheet>
 </template>
 
 <script>
